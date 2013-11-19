@@ -47,10 +47,11 @@ public class Location {
 			double lon = Double.parseDouble(data[2]);
 			Location l = new Location(data[0], lat, lon);
 			System.out.println(l.toString());
-			
+			s.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 }
