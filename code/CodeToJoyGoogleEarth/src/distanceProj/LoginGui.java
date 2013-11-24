@@ -85,8 +85,6 @@ public class LoginGui extends JFrame implements ActionListener
 	
 	JPanel cards, loginScreen, startLocationScreen, stopLocationScreen, allLocationsScreen, addLocScreen;
 	JPanel removeLocScreen, changeLocScreen, newAccountScreen;
-
-	private boolean isNext;
 	
 	public LoginGui()
 	{
@@ -94,7 +92,6 @@ public class LoginGui extends JFrame implements ActionListener
 		setLocation(100, 100);	// Where the window pops up
 		setSize(500, 200);		// Size of the window
 		int wtfsPerMinute = 0;
-		this.isNext = false;
 		
 		// Setting up the layout	
         cards = new JPanel(new CardLayout());
@@ -238,17 +235,12 @@ public class LoginGui extends JFrame implements ActionListener
 			checks.add(currentLoc);
 			checkArray.add(currentLoc);
 		}
-	//	while(this.isNext == false){
-			
-	//	}
-		this.isNext = false;
 		wtfsPerMinute += 10;
 
 		JScrollPane scrollThroughLocations = new JScrollPane(checks);
 		allLocationsScreen.add(scrollThroughLocations, BorderLayout.CENTER);
 		
-		// Set up the fourth screen - select start location
-		
+		// Set up the fourth screen - select start location	
 		startLocationScreen = new JPanel(new BorderLayout());
 		
 		JPanel startPanel = new JPanel(new GridLayout(0,1));
@@ -257,41 +249,12 @@ public class LoginGui extends JFrame implements ActionListener
 		startLocationScreen.add(selectStartLabel, BorderLayout.NORTH);
 		
 		ButtonGroup startLocationGroup = new ButtonGroup();
-		JRadioButton sloc1 = new JRadioButton("location 1");
-		startLocationGroup.add(sloc1);
-		startPanel.add(sloc1);
-		JRadioButton sloc2 = new JRadioButton("location 2");
-		startLocationGroup.add(sloc2);
-		startPanel.add(sloc2);
-		JRadioButton sloc3 = new JRadioButton("location 3");
-		startLocationGroup.add(sloc3);
-		startPanel.add(sloc3);		
-		JRadioButton sloc4 = new JRadioButton("location 3");
-		startLocationGroup.add(sloc4);
-		startPanel.add(sloc4);
-		JRadioButton sloc5 = new JRadioButton("location 3");
-		startLocationGroup.add(sloc5);
-		startPanel.add(sloc5);
-		JRadioButton sloc6 = new JRadioButton("location 3");
-		startLocationGroup.add(sloc6);
-		startPanel.add(sloc6);
-		JRadioButton sloc7 = new JRadioButton("location 3");
-		startLocationGroup.add(sloc7);
-		startPanel.add(sloc7);
-		
-		
-		/*JRadioButton currentJRLoc;
+		JRadioButton currentJRLoc;
 		for(int i = 0; i < inList.size(); i++){
-			//System.out.println(checkArray.get(i).getText());
-			if(checkArray.get(i).isSelected() == true){
-				currentJRLoc = new JRadioButton(checkArray.get(i).getText());
-				System.out.println(checkArray.get(i).getText());
-				startLocationGroup.add(currentJRLoc);
-				startPanel.add(currentJRLoc);
-			}
-		}	*/	
-		
-		//end of my addition
+			currentJRLoc = new JRadioButton(checkArray.get(i).getText());
+			startLocationGroup.add(currentJRLoc);
+			startPanel.add(currentJRLoc);
+		}		
 				
 		JScrollPane scrollThroughStart = new JScrollPane(startPanel);
 		startLocationScreen.add(scrollThroughStart, BorderLayout.CENTER);
@@ -328,28 +291,12 @@ public class LoginGui extends JFrame implements ActionListener
 		stopLocationScreen.add(selectStopLabel, BorderLayout.NORTH);
 		
 		ButtonGroup stopLocationGroup = new ButtonGroup();
-		JRadioButton sploc1 = new JRadioButton("location 1");
-		stopLocationGroup.add(sploc1);
-		stopPanel.add(sploc1);
-		JRadioButton sploc2 = new JRadioButton("location 2");
-		stopLocationGroup.add(sploc2);
-		stopPanel.add(sploc2);
-		JRadioButton sploc3 = new JRadioButton("location 3");
-		stopLocationGroup.add(sploc3);
-		stopPanel.add(sploc3);		
-		JRadioButton sploc4 = new JRadioButton("location 3");
-		stopLocationGroup.add(sploc4);
-		stopPanel.add(sploc4);
-		JRadioButton sploc5 = new JRadioButton("location 3");
-		stopLocationGroup.add(sploc5);
-		stopPanel.add(sploc5);
-		JRadioButton sploc6 = new JRadioButton("location 3");
-		stopLocationGroup.add(sploc6);
-		stopPanel.add(sploc6);
-		JRadioButton sploc7 = new JRadioButton("location 3");
-		stopLocationGroup.add(sploc7);
-		stopPanel.add(sploc7);
-				
+		JRadioButton currentJRLocStop;
+		for(int i = 0; i < inList.size(); i++){
+			currentJRLocStop = new JRadioButton(checkArray.get(i).getText());
+			stopLocationGroup.add(currentJRLocStop);
+			stopPanel.add(currentJRLocStop);
+		}		
 		JScrollPane scrollThroughStop = new JScrollPane(stopPanel);
 		stopLocationScreen.add(scrollThroughStop, BorderLayout.CENTER);
 			
@@ -494,14 +441,12 @@ public class LoginGui extends JFrame implements ActionListener
         {
         	CardLayout cl = (CardLayout)(cards.getLayout());
         	cl.show(cards, "Start Location");
-        	this.isNext = true;
         }
         // Go from picking start location to picking stop location
         else if (e.getSource() == nextScreenButton2)
         {
         	CardLayout cl = (CardLayout)(cards.getLayout());
         	cl.show(cards, "Stop Location");
-        	this.isNext = true;
         }
         // Last next button - launch the application
         else if (e.getSource() == nextScreenButton3)
