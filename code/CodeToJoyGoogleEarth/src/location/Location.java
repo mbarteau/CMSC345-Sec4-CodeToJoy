@@ -1,20 +1,32 @@
-package location;
-
+package location; 
 import java.io.*;
 import java.util.Scanner;
 
-public class Location {
+public class Location implements Comparable {
 
 	private String name;
 	private double lat;
 	private double lon;
 	
+	//constructor for location
 	public Location(String name, double lat, double lon){
 		this.name = name;
 		this.lat = lat;
 		this.lon = lon;
 	}
 	
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		Location l = (Location) arg0;
+		return this.getName().compareTo(l.getName());
+	}
+	
+	/**
+	 * @name getName
+	 * @param none
+	 * @return 
+	 */
 	public String getName(){
 		return this.name;
 	}
@@ -27,9 +39,20 @@ public class Location {
 		return this.lon;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+
 	public String toString(){
-		String loc = "Name: " + this.name + "\nLatitude: " + this.lat +
-				"\nLongitude: " + this.lon;
+		String loc = this.name + "," + this.lat + "," + this.lon + "\n";
 		return loc;
 	}
 	
