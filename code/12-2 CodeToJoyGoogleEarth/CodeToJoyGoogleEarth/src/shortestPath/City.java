@@ -25,6 +25,7 @@
 
 package shortestPath;
 
+import location.Location;;
 
 /**
  * @author Dusan Saiko (dusan@saiko.cz)
@@ -48,26 +49,26 @@ public class City {
     * X coordinate of the city. 
     * It could be S-JTSK coordinate [m].
     */
-   protected int    		x;
+   protected double    		x;
 
    /**
     * Y coordinate of the city. 
     * It could be S-JTSK coordinate [m].
     */
-   protected int    		y;
+   protected double    		y;
    
    
    /**
     * X coordinate of the city - original value in sjtsk coordinates. 
     * It could be S-JTSK coordinate [m].
     */
-   final protected int            SJTSKX;
+   final protected double            SJTSKX;
 
    /**
     * Y coordinate of the city - original value in sjtsk coordinates. 
     * It could be S-JTSK coordinate [m].
     */
-   final protected int            SJTSKY;
+   final protected double            SJTSKY;
    
    /**
     * city name
@@ -100,6 +101,12 @@ public class City {
     */
    protected TSPConfiguration configuration;
    
+   private Location loc;
+   
+   public Location getLocation() {
+	   return this.loc;
+   }
+   
    /**
     * Constructor for the city object
     * @param id int id of city (its index)
@@ -109,14 +116,15 @@ public class City {
     * @param y - Y coordinate of the city [S-JTSK - [m]]
     * @see TSPConfiguration
     */
-   public City(int id, TSPConfiguration configuration, String name, int x, int y) {
+   public City(int id, TSPConfiguration configuration, Location loc) {
       this.id=id;
-      this.x=x;
-      this.y=y;
+      this.x=loc.getLat();
+      this.y=loc.getLon();
       this.SJTSKX=x;
       this.SJTSKY=y;
-      this.name=name;
+      this.name=loc.getName();
       this.configuration=configuration;
+      this.loc = loc;
    }
 
 
@@ -145,9 +153,9 @@ public class City {
     */
    public double distance(City otherCity, boolean useCache) {
 	   
-	  if(useCache==false) {
-		return distance(otherCity.getX(), otherCity.getY());   
-	  }
+	  //if(useCache==false) {
+	  //	return distance(otherCity.getX(), otherCity.getY());   
+	  //}
 	  
       int id1=this.id;
       int id2=otherCity.id;
@@ -164,9 +172,26 @@ public class City {
       //saves us half of combinations
       double distance=distanceCache[id1][id2];
       if(distance==-1) {
-         //no distance found in cache, compute it
-         distance=distance(otherCity.getX(), otherCity.getY());
-         distanceCache[id1][id2]=distance;
+      
+    	  double lat1 = this.x;
+    	  double lon1 = this.y;
+    	  double lat2 = otherCity.getX();
+    	  double lon2 = otherCity.getY();
+    	  
+    	  double R = 6371; // km
+    	  double dLat = Math.toRadians(lat2-lat1);
+    	  double dLon = Math.toRadians(lon2-lon1);
+    	  lat1 = Math.toRadians(lat1);
+    	  lat2 = Math.toRadians(lat2);
+			
+    	  double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    			  Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+    	  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    	  double d = R * c;
+    	  
+    	  //no distance found in cache, compute it
+    	  distance=d;
+    	  distanceCache[id1][id2]=distance;
       }
       return distance;
    }
@@ -195,20 +220,6 @@ public class City {
       return distance;
    }
    
-   /**
-    * Computes distance from point
-    * If coorfinates are in S-JTSK, then this distance is in meters.
-    * This city has to have the same coordinate system like a given point.
-    * @param pX
-    * @param pY
-    * @return distance between this city and some point in the world. 
-    */
-   protected double distance(int pX, int pY) {
-      double dx=this.x - pX;
-      double dy=this.y - pY;
-      double distance=Math.sqrt(dx * dx + dy * dy);
-      return distance;
-   }
    
    /**
     * @return Returns the name of the city
@@ -220,14 +231,14 @@ public class City {
    /**
     * @return Returns the x coordinate of city
     */
-   public int getX() {
+   public double getX() {
       return x;
    }
    
    /**
     * @return Returns the y coordinate of the city
     */
-   public int getY() {
+   public double getY() {
       return y;
    }
    
@@ -237,14 +248,14 @@ public class City {
    /**
     * @return Returns the x coordinate of city - original value in sjtsk coordinates
     */
-   public int getSJTSKX() {
+   public double getSJTSKX() {
       return SJTSKX;
    }
    
    /**
     * @return Returns the y coordinate of the city - original value in sjtsk coordinates
     */
-   public int getSJTSKY() {
+   public double getSJTSKY() {
       return SJTSKY;
    }
    
