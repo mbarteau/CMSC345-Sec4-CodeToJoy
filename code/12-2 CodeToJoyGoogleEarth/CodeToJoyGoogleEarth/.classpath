@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="lib/JavaAPIforKml-sources.jar"/>
 	<classpathentry kind="lib" path="lib/JavaAPIforKml.jar"/>
 	<classpathentry kind="lib" path="lib/jaxb-impl-2.2.7-b41.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
