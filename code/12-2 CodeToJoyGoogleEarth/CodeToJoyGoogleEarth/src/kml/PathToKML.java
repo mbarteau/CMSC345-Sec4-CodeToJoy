@@ -14,11 +14,12 @@ public class PathToKML {
 	private static LineString lineString = KmlFactory.createLineString();	
 	
 	
-	
+	//private constructor for static class
 	private PathToKML(){
 	}
 	
-	public static void createPath(ArrayList<Location> tripList) throws FileNotFoundException{
+	
+	public static void createPath(ArrayList<Location> tripList, String fileName) throws FileNotFoundException{
 		document = kml.createAndSetDocument();
 		final Style style = document.createAndAddStyle().withId("myDefaultStyles");
 		style.createAndSetBalloonStyle().withColor("64F00014");
@@ -29,24 +30,24 @@ public class PathToKML {
 		
 		lineString = placemark.createAndSetLineString().withTessellate(true);
 		
-		
+		//adds the locations from the array into kml to be written.
 		for(Location loc:tripList){
 			lineString.addToCoordinates(loc.getLon(), loc.getLat());
 		}
 		
-		marshal();
+		//calls the marshal function
+		marshal(fileName);
 	}
 	
-	public static void marshal() throws FileNotFoundException{
-		kml.marshal(new File("TestKml.kml"));
+	
+	public static void marshal(String fileName) throws FileNotFoundException{
+		//
+		kml.marshal(new File(fileName +".kml"));
 	}
 	
-	public static void openFile(){
+	public static void openFile(String programLoc, String fileLoc){
         try {
-            Runtime.getRuntime().exec(new String[] {
-            "D:\\Program Files (x86)\\Google\\Google Earth\\client\\googleearth.exe",
-            "C:\\Users\\Matt\\Downloads\\Workspace\\testKML\\testKml.kml"
-        });
+            Runtime.getRuntime().exec(new String[] {programLoc,fileLoc});
         } catch (Exception ex) {
             // something went wrong
         }
@@ -64,8 +65,8 @@ public class PathToKML {
 		someList.add(l1);
 		someList.add(l2);
 		someList.add(l3);
-		PathToKML.createPath(someList);
-		PathToKML.openFile();
+		PathToKML.createPath(someList, "test");
+		
 
 	}
 }

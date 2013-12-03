@@ -1,1 +1,3 @@
-bart5, 12ab, U
+ab, 12, U
+test2, ok, U
+test3, hi, U
