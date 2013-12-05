@@ -2,6 +2,13 @@ package location;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Class: Location
+ * 
+ * This is the location class, containing the information needed to create a location
+ * @author Ben
+ *
+ */
 public class Location implements Comparable {
 
 	private String name;
@@ -9,6 +16,11 @@ public class Location implements Comparable {
 	private double lon;
 	
 	//constructor for location
+	/**
+	 * @param name
+	 * @param lat
+	 * @param lon
+	 */
 	public Location(String name, double lat, double lon){
 		this.name = name;
 		this.lat = lat;
@@ -16,6 +28,11 @@ public class Location implements Comparable {
 	}
 	
 	@Override
+	/**
+	 * @name getName
+	 * @param Object arg0, to be compared to
+	 * @param return int, the value for comparison
+	 */
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub
 		Location l = (Location) arg0;
@@ -25,32 +42,62 @@ public class Location implements Comparable {
 	/**
 	 * @name getName
 	 * @param none
-	 * @return 
+	 * @return this location's name
 	 */
 	public String getName(){
 		return this.name;
 	}
 	
+	/**
+	 * @name getLat
+	 * @param none
+	 * @return this location's latitude
+	 */
 	public double getLat(){
 		return this.lat;
 	}
 	
+	/**
+	 * @name getLon
+	 * @param none
+	 * @return this location's name
+	 */
 	public double getLon(){
 		return this.lon;
 	}
 	
+	/**
+	 * @name setName
+	 * @param name, a String to take the place of current name
+	 * @return none
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @name setLat
+	 * @param lat, a double to take the place of current lat
+	 * @return none
+	 */
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
+	/**
+	 * @name setLon
+	 * @param lon, a double to take the place of current lon
+	 * @return none
+	 */	
 	public void setLon(double lon) {
 		this.lon = lon;
 	}
 
+	/**
+	 * @name toString
+	 * @param none
+	 * @return loc, a string representation of a location
+	 */
 	public String toString(){
 		String loc = this.name + "," + this.lat + "," + this.lon + "\n";
 		return loc;

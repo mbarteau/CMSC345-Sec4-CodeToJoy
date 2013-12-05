@@ -1,10 +1,17 @@
 package admin;
-
 import location.Location;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+
+/**
+ * Class: admin
+ * 
+ * This class handles the admin privileges of adding, removing and modifying locations
+ * @author Ben
+ *
+ */
 public class admin {
 	
 	//class constructor
