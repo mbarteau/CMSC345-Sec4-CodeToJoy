@@ -2,24 +2,17 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0">
     <Document>
         <Style id="myDefaultStyles">
-            <LabelStyle>
-                <color>7fffaaff</color>
-                <scale>1.5</scale>
-            </LabelStyle>
             <LineStyle>
                 <color>641400FA</color>
                 <width>3.0</width>
             </LineStyle>
-            <BalloonStyle>
-                <color>64F00014</color>
-            </BalloonStyle>
         </Style>
         <Placemark>
-            <name>Folder object 3 (Path)</name>
+            <name>matt trip</name>
             <styleUrl>#myDefaultStyles</styleUrl>
             <LineString>
                 <tessellate>1</tessellate>
-                <coordinates>-68.27333,44.33856 -66.0,67.66667 -119.40424,73.60195 -102.33969,43.85538 -109.59251,38.73308 -115.92806,51.49685</coordinates>
+                <coordinates>-102.33969,43.85538 -81.46823,45.22583 -60.40214,46.64621 -80.7547,33.79491 -80.33477,25.46437 -103.24254,29.12749 -104.44967,32.17507 -112.18659,37.59262 -111.2615,38.36697 -109.87826,38.32687 -107.7416,38.57539 -115.92806,51.49685 -122.16797,42.86892</coordinates>
             </LineString>
         </Placemark>
     </Document>
