@@ -79,13 +79,13 @@ public void actionPerformed(ActionEvent e) {
  * add buttons at the south
  */
 private void addButtons() {
-    JButton btncontents = new JButton("Contents");
-    btncontents.addActionListener(this);
+   // JButton btncontents = new JButton("Contents");
+    //btncontents.addActionListener(this);
     JButton btnclose = new JButton("Close");
     btnclose.addActionListener(this);
     //put into JPanel
     JPanel panebuttons = new JPanel();
-    panebuttons.add(btncontents);
+    //panebuttons.add(btncontents);
     panebuttons.add(btnclose);
     //add panel south
     getContentPane().add(panebuttons, BorderLayout.SOUTH);

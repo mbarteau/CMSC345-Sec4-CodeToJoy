@@ -4,6 +4,7 @@ import location.Location;
 import kml.PathToKML;
 import email.GoogleMail;
 import shortestPath.ShortestDistance;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;        
 import java.awt.Color;
@@ -24,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,6 +47,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import helpFiles.HelpWindow;
 
 /**
 * Class: LoginGui
@@ -689,13 +692,10 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, "Create new account");         
 		}
-		else if (e.getSource() == helpButton1 || e.getSource() == helpButton2 ||
-				e.getSource() == helpButton3 || e.getSource() == helpButton4 ||
-				e.getSource() == helpButton5)
+		else if (e.getSource() == helpButton1 ||e.getSource() == helpButton2 ||e.getSource() == helpButton3 ||e.getSource() == helpButton4 ||e.getSource() == helpButton5)
 		{
-			
-			/** Put the code to open the help document here **/
-			
+			URL index = ClassLoader.getSystemResource("helpInfo.html");
+		    new HelpWindow("Help", index);
 		}
 		// Click back from the new account page to get back to the login screen
 		else if (e.getSource() == backButton1)
@@ -1022,8 +1022,8 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		    	e1.printStackTrace();
 		    }
 		
-		    String programLoc = "D:\\Program Files (x86)\\Google\\Google Earth\\client\\googleearth.exe";
-		    String fileLoc = "C:\\Users\\Matt\\Downloads\\Workspace\\CodeToJoyGoogleEarth\\"+userName+".kml";
+		    String programLoc = "C:\\Program Files (x86)\\Google\\Google Earth\\client\\googleearth.exe";
+		    String fileLoc = "C:\\Users\\Sean\\Documents\\GitHub\\CMSC345-Sec4-CodeToJoy\\code\\CodeToJoyGoogleEarth\\"+userName+".kml";
 		
 		    PathToKML.openFile(programLoc, fileLoc);
 		    

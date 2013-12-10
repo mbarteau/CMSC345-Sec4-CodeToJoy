@@ -17,6 +17,10 @@ public class ShortestDistance {
 	 * @return shortest path between the first and last indices of the ArrayList in a new Array List.
 	 */
 	public static ArrayList<Location> getShortestPath(ArrayList<Location> locations) {
+		
+		if (locations.size() <= 3)
+			return locations;
+		
 		SimpleUnisexMutatorHibrid2OptEngine e = new SimpleUnisexMutatorHibrid2OptEngine();
 		TSPConfiguration appConfiguration = new TSPConfiguration();
 		appConfiguration.setInitialPopulationSize(1000);
