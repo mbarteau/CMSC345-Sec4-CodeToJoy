@@ -1021,10 +1021,10 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		    {
 		    	e1.printStackTrace();
 		    }
-		
-		    String programLoc = "C:\\Program Files (x86)\\Google\\Google Earth\\client\\googleearth.exe";
-		    String fileLoc = "C:\\Users\\Sean\\Documents\\GitHub\\CMSC345-Sec4-CodeToJoy\\code\\CodeToJoyGoogleEarth\\"+userName+".kml";
-		
+
+		    String path = new File(LoginGui.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
+		    String programLoc = path + "\\client\\googleearth.exe";
+		    String fileLoc = path + "\\" + userName + ".kml";
 		    PathToKML.openFile(programLoc, fileLoc);
 		    
 		    // If the fields aren't empty, email the trip to the user

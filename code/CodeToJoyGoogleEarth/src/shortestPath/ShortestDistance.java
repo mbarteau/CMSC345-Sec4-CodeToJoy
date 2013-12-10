@@ -51,7 +51,7 @@ public class ShortestDistance {
 		sd.run();
 	}
 	
-	public void run() {
+	private void run() {
 		
 		ArrayList<Location> locations = new ArrayList<Location>();
 		
