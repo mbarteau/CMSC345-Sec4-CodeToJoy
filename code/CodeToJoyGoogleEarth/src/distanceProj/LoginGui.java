@@ -751,6 +751,15 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		    {
 		            checkedBoxes.add((JCheckBox) e.getSource());
 		    }
+		}else{
+			JCheckBox checked = (JCheckBox) e.getSource();
+		    for (int i = 0; i < checkedBoxes.size(); i++)
+		    {
+		            if (checked.getText().equals(checkedBoxes.get(i).getText()))
+		            {
+		                    checkedBoxes.remove(i);
+		            }
+		    }
 		}
 		}
 		
@@ -1115,7 +1124,6 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 				    String fileLoc = path + "\\" + userName + ".kml";
 				    PathToKML.openFile(programLoc, fileLoc);
 				
-				    PathToKML.openFile(programLoc, fileLoc);
 				    
 				    // If the fields aren't empty, email the trip to the user
 				    if (!emailField.getText().equals("") && !dateField.getText().equals(""))
@@ -1290,9 +1298,31 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 				    BufferedWriter writeToLocFile;
 				    try
 				    {
-				            writeToLocFile = new BufferedWriter(new FileWriter("locations.txt", true));
-				            writeToLocFile.write(getName + ", " + getLat + ", " + getLong + "\n");
+				    	
+				    	
+					    	double lat = Double.parseDouble(getLat);
+				            double lon = Double.parseDouble(getLong);
+				            Location location = new Location(getName, lat, lon);
+				            boolean added = false;
+				            int size = locations.size();
+				            for(int i = 0; i < size; i++){
+				            	if(location.compareTo(locations.get(i)) < 0 && added == false){
+				            		locations.add(i, location);
+				            		added = true;
+				            	}
+				            }
+				            
+				            
+				            writeToLocFile = new BufferedWriter(new FileWriter("locations.txt", false));
+				            for(Location l: locations){
+				            	writeToLocFile.write(l.getName() + ", " + l.getLat() + ", " + l.getLon() + "\n");
+				            }
+				            
 				            writeToLocFile.close();
+				            
+				            
+				            
+				            
 				    }
 				    catch(IOException e1)
 				    {
@@ -1566,14 +1596,33 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		}
 		
 		private ArrayList<Location> getTrip()
-		{
-		ArrayList<Location> trip = new ArrayList<Location>();
-		for (int i = 0; i < checkedBoxes.size(); i++)
-		{
-		trip.add(getLocation(checkedBoxes.get(i).getText()));
-		}
-		return trip;
-		}
+	    {
+	    	int start = 0;
+	    	int end = 0;
+	    	Location temp = null;
+	    	
+	    	ArrayList<Location> trip = new ArrayList<Location>();
+	    	for (int i = 0; i < checkedBoxes.size(); i++)
+	    	{
+	    		if(getLocation(checkedBoxes.get(i).getText()).getName().equals(startLocation.getName())){
+	    			start = i;
+	    		}
+	    		if(getLocation(checkedBoxes.get(i).getText()).getName().equals(stopLocation.getName())){
+	    			end = i;
+	    		}
+	    		trip.add(getLocation(checkedBoxes.get(i).getText()));
+	    	}
+	    
+	    	temp =trip.get(0);
+	    	trip.set(0, trip.get(start));
+	    	trip.set(start, temp);
+	    	
+	    	temp =trip.get(trip.size()-1);
+	    	trip.set(trip.size()-1, trip.get(end));
+	    	trip.set(end, temp);
+	    	
+	    	return trip;
+	    }
 		
 		//
 		private Location getLocation(String locationName)

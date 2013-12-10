@@ -1,101 +1,101 @@
-Acadia,44.33856,-68.27333
-Arches,38.73308,-109.59251
-Aulavik,73.60195,-119.40424
-Auyuittuq,67.66667,-66.0
-Badlands,43.85538,-102.33969
-Banff,51.49685,-115.92806
-Big Bend,29.12749,-103.24254
-Biscayne,25.46437,-80.33477
-Black Canyon of the Gunnison,38.57539,-107.7416
-Bruce Peninsula,45.22583,-81.46823
-Bryce Canyon,37.59262,-112.18659
-Canyonlands,38.32687,-109.87826
-Cape Breton Highlands,46.64621,-60.40214
-Capitol Reef,38.36697,-111.2615
-Carlsbad Caverns,32.17507,-104.44967
-Channel Islands,33.9986,-119.85838
-Congaree,33.79491,-80.7547
-Crater Lake,42.86892,-122.16797
-Cuyahoga Valley,41.28082,-81.56781
-Death Valley,36.50539,-117.07941
-Denali,63.33333,-150.5
-Dry Tortugas,24.62848,-82.87319
-Elk Island,53.64744,-112.84441
-Everglades,25.28662,-80.89865
-Forillon,48.9233,-64.39536
-Fundy,45.59843,-64.95152
-Gates of the Arctic,67.68545,-153.3254
-Georgian Bay Islands,44.8781,-79.87116
-Glacier,48.75961,-113.78702
-Glacier Bay,58.66581,-136.90021
-Grand Canyon,36.10697,-112.113
-Grand Teton,43.9014,-110.77048
-Grasslands,49.12152,-107.43668
-Great Basin,38.98333,-114.3
-Great Sand Dunes,37.7916,-105.59433
-Great Smoky Mountains,35.61193,-83.54966
-Gros Morne,49.65201,-57.75576
-Guadalupe Mountains,31.90391,-104.86881
-Gulf Islands,48.78051,-123.15204
-Gwaii Haanas,52.43908,-131.7734
-Haleakala,20.72038,-156.15515
-Hawaii Volcanoes,19.41751,-155.28122
-Hot Springs,34.51182,-93.05381
-Isle Royale,47.97626,-88.93126
-Ivvavik,69.09406,-139.83398
-Jasper,52.75,-118.16667
-Joshua Tree,33.8734,-115.90106
-Katmai,59.09975,-155.19865
-Kejimkujik,44.38333,-65.33333
-Kenai Fjords,60.04378,-149.81636
-Kings Canyon,36.88785,-118.55515
-Kluane,60.75,-139.5
-Kobuk Valley,67.41042,-159.4501
-Kootenay,50.97694,-115.95921
-Kouchibouguac,46.84972,-64.96694
-La Mauricie,46.83333,-73.0
-Lake Clark,60.43002,-154.30318
-Lassen Volcanic,40.49766,-121.42066
-Mammoth Cave,37.18699,-86.10054
-Mesa Verde,37.23088,-108.46184
-Mingan Archipelago,50.2458,-63.59199
-Mount Rainier,46.87997,-121.72691
-Mount Revelstoke,51.08333,-118.0
-Naats'ihch'oh,62.51661,-128.17613
-Nahanni,61.5,-125.5
-North Cascades,48.77182,-121.29846
-Olympic,47.96907,-123.49825
-Pacific Rim,49.0,-125.66667
-Petrified Forest,34.90999,-109.80679
-Pinnacles,36.49057,-121.18249
-Point Pelee,41.96277,-82.51844
-Prince Albert,53.92569,-106.38889
-Prince Edward Island,46.43403,-63.22442
-Pukaskwa,48.1058,-86.05184
-Quttinirpaaq,82.12176,-71.69247
-Redwood,41.21318,-124.00463
-Riding Mountain,50.7,-99.63333
-Rocky Mountain,40.34279,-105.68364
-Sable Island,43.93649,-59.91586
-Saguaro,32.29674,-111.16661
-Sequoia,36.48637,-118.56575
-Shenandoah,38.29276,-78.67958
-Sirmilik,73.07081,-79.79324
-Terra Nova,48.51285,-53.89159
-Theodore Roosevelt,46.97897,-103.53871
-Thousand Islands,44.25887,-76.31358
-Torngat Mountains,59.20694,-64.15089
-Tuktut Nogait,68.81869,-121.74925
-Ukkusiksalik,66.04303,-88.98663
-Virgin Islands,18.33595,-64.79341
-Voyageurs,48.4841,-92.82709
-Vuntut,68.38603,-139.87793
-Wapusk,57.78613,-93.1583
-Waterton Lakes,48.96814,-113.89344
-Wind Cave,43.6046,-103.42134
-Wood Buffalo,59.4395,-112.8764
-Wrangell –St. Elias,61.71044,-142.98568
-Yellowstone,44.42796,-110.58846
-Yoho,51.46667,-116.58333
-Yosemite,37.8651,-119.53833
-Zion,37.20002,-112.98632
+Acadia, 44.33856, -68.27333
+Arches, 38.73308, -109.59251
+Aulavik, 73.60195, -119.40424
+Auyuittuq, 67.66667, -66.0
+Badlands, 43.85538, -102.33969
+Banff, 51.49685, -115.92806
+Big Bend, 29.12749, -103.24254
+Biscayne, 25.46437, -80.33477
+Black Canyon of the Gunnison, 38.57539, -107.7416
+Bruce Peninsula, 45.22583, -81.46823
+Bryce Canyon, 37.59262, -112.18659
+Canyonlands, 38.32687, -109.87826
+Cape Breton Highlands, 46.64621, -60.40214
+Capitol Reef, 38.36697, -111.2615
+Carlsbad Caverns, 32.17507, -104.44967
+Channel Islands, 33.9986, -119.85838
+Congaree, 33.79491, -80.7547
+Crater Lake, 42.86892, -122.16797
+Cuyahoga Valley, 41.28082, -81.56781
+Death Valley, 36.50539, -117.07941
+Denali, 63.33333, -150.5
+Dry Tortugas, 24.62848, -82.87319
+Elk Island, 53.64744, -112.84441
+Everglades, 25.28662, -80.89865
+Forillon, 48.9233, -64.39536
+Fundy, 45.59843, -64.95152
+Gates of the Arctic, 67.68545, -153.3254
+Georgian Bay Islands, 44.8781, -79.87116
+Glacier, 48.75961, -113.78702
+Glacier Bay, 58.66581, -136.90021
+Grand Canyon, 36.10697, -112.113
+Grand Teton, 43.9014, -110.77048
+Grasslands, 49.12152, -107.43668
+Great Basin, 38.98333, -114.3
+Great Sand Dunes, 37.7916, -105.59433
+Great Smoky Mountains, 35.61193, -83.54966
+Gros Morne, 49.65201, -57.75576
+Guadalupe Mountains, 31.90391, -104.86881
+Gulf Islands, 48.78051, -123.15204
+Gwaii Haanas, 52.43908, -131.7734
+Haleakala, 20.72038, -156.15515
+Hawaii Volcanoes, 19.41751, -155.28122
+Hot Springs, 34.51182, -93.05381
+Isle Royale, 47.97626, -88.93126
+Ivvavik, 69.09406, -139.83398
+Jasper, 52.75, -118.16667
+Joshua Tree, 33.8734, -115.90106
+Katmai, 59.09975, -155.19865
+Kejimkujik, 44.38333, -65.33333
+Kenai Fjords, 60.04378, -149.81636
+Kings Canyon, 36.88785, -118.55515
+Kluane, 60.75, -139.5
+Kobuk Valley, 67.41042, -159.4501
+Kootenay, 50.97694, -115.95921
+Kouchibouguac, 46.84972, -64.96694
+La Mauricie, 46.83333, -73.0
+Lake Clark, 60.43002, -154.30318
+Lassen Volcanic, 40.49766, -121.42066
+Mammoth Cave, 37.18699, -86.10054
+Mesa Verde, 37.23088, -108.46184
+Mingan Archipelago, 50.2458, -63.59199
+Mount Rainier, 46.87997, -121.72691
+Mount Revelstoke, 51.08333, -118.0
+Naats'ihch'oh, 62.51661, -128.17613
+Nahanni, 61.5, -125.5
+North Cascades, 48.77182, -121.29846
+Olympic, 47.96907, -123.49825
+Pacific Rim, 49.0, -125.66667
+Petrified Forest, 34.90999, -109.80679
+Pinnacles, 36.49057, -121.18249
+Point Pelee, 41.96277, -82.51844
+Prince Albert, 53.92569, -106.38889
+Prince Edward Island, 46.43403, -63.22442
+Pukaskwa, 48.1058, -86.05184
+Quttinirpaaq, 82.12176, -71.69247
+Redwood, 41.21318, -124.00463
+Riding Mountain, 50.7, -99.63333
+Rocky Mountain, 40.34279, -105.68364
+Sable Island, 43.93649, -59.91586
+Saguaro, 32.29674, -111.16661
+Sequoia, 36.48637, -118.56575
+Shenandoah, 38.29276, -78.67958
+Sirmilik, 73.07081, -79.79324
+Terra Nova, 48.51285, -53.89159
+Theodore Roosevelt, 46.97897, -103.53871
+Thousand Islands, 44.25887, -76.31358
+Torngat Mountains, 59.20694, -64.15089
+Tuktut Nogait, 68.81869, -121.74925
+Ukkusiksalik, 66.04303, -88.98663
+Virgin Islands, 18.33595, -64.79341
+Voyageurs, 48.4841, -92.82709
+Vuntut, 68.38603, -139.87793
+Wapusk, 57.78613, -93.1583
+Waterton Lakes, 48.96814, -113.89344
+Wind Cave, 43.6046, -103.42134
+Wood Buffalo, 59.4395, -112.8764
+Wrangell –St. Elias, 61.71044, -142.98568
+Yellowstone, 44.42796, -110.58846
+Yoho, 51.46667, -116.58333
+Yosemite, 37.8651, -119.53833
+Zion, 37.20002, -112.98632

@@ -43,6 +43,8 @@ public class PathToKML {
 		//adds the locations from the array into kml to be written.
 		for(Location loc:tripList){
 			lineString.addToCoordinates(loc.getLon(), loc.getLat());
+			//document.createAndAddPlacemark().withName("test").createAndSetLookAt().withLongitude(loc.getLon()).withLatitude(loc.getLat());
+			document.createAndAddPlacemark().withName(loc.getName()).createAndSetPoint().addToCoordinates(loc.getLon(), loc.getLat());
 		}
 		
 		//calls the marshal function
