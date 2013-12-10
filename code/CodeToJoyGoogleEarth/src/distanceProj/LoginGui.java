@@ -4,6 +4,7 @@ import location.Location;
 import kml.PathToKML;
 import email.GoogleMail;
 import shortestPath.ShortestDistance;
+import helpFiles.HelpWindow;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;        
@@ -47,7 +48,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import helpFiles.HelpWindow;
 
 /**
 * Class: LoginGui
@@ -65,7 +65,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 	JButton registerButton, loginButton, backButton1, logoutButton1, submitButton, createAccountButton;
 	JButton nextScreenButton1, nextScreenButton2, nextScreenButton3, backButton2, backButton3;
 	JButton logoutButton2, logoutButton3, backButton4, backButton5, backButton6, continueButton;
-	JButton helpButton1, helpButton2, helpButton3, helpButton4, helpButton5, helpButton6, helpButton7;
+	JButton helpButton1, helpButton2, helpButton3, helpButton4, helpButton5, helpButton6;
 
 	// Admin specific buttons
 	JButton addLocationButton, removeLocationButton, changeLocationButton, submitButton1, submitButton2;
@@ -94,7 +94,8 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 
 	// Admin specific error labels
 	JLabel newLocNameLabel, newLocLatLabel, newLocLongLabel, existingLocError, emptyFieldsError;
-	JLabel emptyFieldsError2, chooseLocError;
+	JLabel emptyFieldsError2, chooseLocError, badLatOrLongError, badLatOrLongError2;
+	JLabel commaError1, commaError2, commaError3, commaError4;
 
 	JPasswordField passwordField;
 
@@ -191,6 +192,13 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		badUserLabel.setSize(250, 15);
 		loginScreen.add(badUserLabel);
 		badUserLabel.setVisible(false);
+		
+		commaError1 = new JLabel("You may not use a comma in the username or password.");
+		commaError1.setForeground(errorColor);
+		commaError1.setLocation(500, 300);
+		commaError1.setSize(250, 15);
+		commaError1.setVisible(false);
+		loginScreen.add(commaError1);
 
 		ImageIcon titleIcon = new ImageIcon("mappingMaestroTitle.jpg");
 		JLabel title = new JLabel(titleIcon);
@@ -277,7 +285,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 	
 		
 		passwordsNotSame = new JLabel("The passwords do not match.");
-		passwordsNotSame.setLocation(450, 300);
+		passwordsNotSame.setLocation(400, 350);
 		passwordsNotSame.setSize(250, 30);
 		passwordsNotSame.setForeground(errorColor2);
 		newAccountScreen.add(passwordsNotSame);
@@ -285,17 +293,24 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		
 		userExists = new JLabel("This account already exists.");
 		userExists.setForeground(errorColor2);
-		userExists.setLocation(450, 300);
+		userExists.setLocation(400, 350);
 		userExists.setSize(250, 30);
 		newAccountScreen.add(userExists);
 		userExists.setVisible(false);
 		
 		emptyPassword = new JLabel("You must enter a username and password");
 		emptyPassword.setForeground(errorColor2);
-		emptyPassword.setLocation(450, 300);
+		emptyPassword.setLocation(400, 350);
 		emptyPassword.setSize(250, 30);
 		newAccountScreen.add(emptyPassword);
 		emptyPassword.setVisible(false);
+		
+		commaError2 = new JLabel("You may not enter a comma in the username or password.");
+		commaError2.setForeground(errorColor2);
+		commaError2.setLocation(400, 350);
+		commaError2.setSize(350, 30);
+		newAccountScreen.add(commaError2);
+		commaError2.setVisible(false);
 		
 		// Set up the third screen - choose the locations
 		allLocationsScreen = new JPanel(new BorderLayout());
@@ -402,6 +417,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		emailInstructions += "\n information below. \n\n";
 		JTextArea emailInfo = new JTextArea(emailInstructions);
 		emailInfo.setOpaque(false);
+		emailInfo.setEditable(false);
 		emailInfo.setForeground(textColor);
 		emailPanel.add(emailInfo);
 		
@@ -410,6 +426,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		emailLabel = new JTextArea("Enter your email address:");
 		emailLabel.setForeground(textColor);
 		emailLabel.setOpaque(false);
+		emailLabel.setEditable(false);
 		emailPanel.add(emailLabel);
 		emailPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		emailPanel.add(Box.createVerticalGlue());
@@ -422,6 +439,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		dateLabel = new JTextArea("Enter the date of the trip:");
 		dateLabel.setForeground(textColor);
 		dateLabel.setOpaque(false);
+		dateLabel.setEditable(false);
 		emailPanel.add(dateLabel);
 		emailPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		emailPanel.add(Box.createVerticalGlue());
@@ -446,12 +464,18 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		
 		// Set up the screen to add a location
 		addLocScreen = new JPanel(new BorderLayout());
+		
+		JPanel addLocTopPanel = new JPanel(new FlowLayout());
+		addLocTopPanel.setBackground(lightBackColor);
+		
 		JLabel addLocTitle = new JLabel("Add a new Location");
-		addLocTitle.setBackground(lightBackColor);
-		addLocScreen.add(addLocTitle, BorderLayout.NORTH);
+		addLocTopPanel.add(addLocTitle);
+		addLocScreen.add(addLocTopPanel, BorderLayout.NORTH);
 		
 		JPanel newLocPanel = new JPanel();
 		newLocPanel.setLayout(new BoxLayout(newLocPanel, BoxLayout.Y_AXIS));
+		newLocPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		newLocPanel.setBackground(lightBackColor);
 		
 		newLocNameLabel = new JLabel("Location Name: ");
 		newLocNameField = new JTextField(20);
@@ -470,32 +494,41 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		
 		addLocSidePane = new JPanel();
 		addLocSidePane.setLayout(new BoxLayout(addLocSidePane, BoxLayout.Y_AXIS));
-		
-		backButton4 = new JButton("BACK");        
-		addLocSidePane.add(backButton4);
-		
-		addLocSidePane.add(Box.createRigidArea(new Dimension(0, 10)));
+		addLocSidePane.setBackground(lightBackColor);
 		
 		submitButton1 = new JButton("Submit new location");
 		addLocSidePane.add(submitButton1);
+		
+		addLocSidePane.add(Box.createRigidArea(new Dimension(0, 20)));
+		
+		backButton4 = new JButton("CANCEL");        
+		addLocSidePane.add(backButton4);
 		
 		addLocScreen.add(addLocSidePane, BorderLayout.EAST);
 		
 		existingLocError = new JLabel("That location already exists, you may not use it.");
 		existingLocError.setVisible(false);
 		existingLocError.setForeground(Color.red);
-		addLocScreen.add(existingLocError, BorderLayout.SOUTH);
 		
 		emptyFieldsError = new JLabel("You must enter something in each field.");
 		emptyFieldsError.setVisible(false);
 		emptyFieldsError.setForeground(Color.red);
-		addLocScreen.add(emptyFieldsError, BorderLayout.SOUTH);
+		
+		badLatOrLongError = new JLabel("You have entered an invalid latitude or longitude.");
+		badLatOrLongError.setVisible(false);
+		badLatOrLongError.setForeground(Color.red);
+		
+		commaError3 = new JLabel("You may not enter a comma in the name.");
+		commaError3.setVisible(false);
+		commaError3.setForeground(Color.red);
 		
 		addErrorPanel = new JPanel();
 		addErrorPanel.setLayout(new BoxLayout(addErrorPanel, BoxLayout.Y_AXIS));
 		
 		addErrorPanel.add(existingLocError);
 		addErrorPanel.add(emptyFieldsError);
+		addErrorPanel.add(badLatOrLongError);
+		addErrorPanel.add(commaError3);
 		
 		addLocScreen.add(newLocPanel, BorderLayout.CENTER);
 		addLocScreen.add(addErrorPanel, BorderLayout.SOUTH);
@@ -504,15 +537,24 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		removeLocPanel = new JPanel(new GridLayout(0,1));
 		
 		removeLocScreen = new JPanel(new BorderLayout());
+		
+		JPanel removeTopPanel = new JPanel(new FlowLayout());
 		JLabel removeLocTitle = new JLabel("Remove a Location");
-		removeLocTitle.setBackground(lightBackColor);
-		removeLocScreen.add(removeLocTitle, BorderLayout.NORTH);
+		removeTopPanel.setBackground(lightBackColor);
+		removeTopPanel.add(removeLocTitle);
+		removeLocScreen.add(removeTopPanel, BorderLayout.NORTH);
+		
+		JPanel removeSidePanel = new JPanel();
+		removeSidePanel.setLayout(new BoxLayout(removeSidePanel, BoxLayout.Y_AXIS));
+		removeSidePanel.setBackground(lightBackColor);
 		
 		submitButton2 = new JButton("Submit removed locations");
-		removeLocScreen.add(submitButton2, BorderLayout.SOUTH);
+		removeSidePanel.add(submitButton2);
+		removeSidePanel.add(Box.createRigidArea(new Dimension(0,20)));
+		backButton5 = new JButton("CANCEL");
+		removeSidePanel.add(backButton5);
 		
-		backButton5 = new JButton("BACK");
-		removeLocScreen.add(backButton5, BorderLayout.EAST);
+		removeLocScreen.add(removeSidePanel, BorderLayout.EAST);
 		
 		// Make that panel scrollable
 		scrollThroughRemoveLocs = new JScrollPane(removeLocPanel);
@@ -520,9 +562,13 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		
 		// Set up the screen to choose a location to modify
 		changeLocScreen = new JPanel(new BorderLayout());
+		
+		JPanel changeLocTopPanel = new JPanel(new FlowLayout());
+		changeLocTopPanel.setBackground(lightBackColor);
+		
 		JLabel changeLocTitle = new JLabel("Change a Location");
-		changeLocTitle.setBackground(lightBackColor);
-		changeLocScreen.add(changeLocTitle, BorderLayout.NORTH);
+		changeLocTopPanel.add(changeLocTitle);
+		changeLocScreen.add(changeLocTopPanel, BorderLayout.NORTH);
 		
 		modifyPanel = new JPanel(new GridLayout(0,1));
 		
@@ -532,15 +578,16 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		
 		modifySidePane = new JPanel();
 		modifySidePane.setLayout(new BoxLayout(modifySidePane, BoxLayout.Y_AXIS));
+		modifySidePane.setBackground(lightBackColor);
 		//modifySidePane.add(Box.createVerticalGlue());
-		
-		backButton6 = new JButton("BACK");
-		modifySidePane.add(backButton6);
+
+		submitButton3 = new JButton("Submit location to modify");
+		modifySidePane.add(submitButton3);
 		
 		modifySidePane.add(Box.createRigidArea(new Dimension(0, 10)));
 		
-		submitButton3 = new JButton("Submit location to modify");
-		modifySidePane.add(submitButton3);
+		backButton6 = new JButton("CANCEL");
+		modifySidePane.add(backButton6);
 		
 		chooseLocError = new JLabel("You must choose a location.");
 		chooseLocError.setVisible(false);
@@ -552,13 +599,16 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		// Set up the screen to actually input information to modify
 		changeLocScreen2 = new JPanel(new BorderLayout());
 		
+		JPanel infoTopPanel = new JPanel(new FlowLayout());
+		modifyTitle = new JLabel();        // Depends on what location to modify
+		infoTopPanel.add(modifyTitle);
+		infoTopPanel.setBackground(lightBackColor);
+		changeLocScreen2.add(infoTopPanel, BorderLayout.NORTH);
+		
 		infoPane = new JPanel();
 		infoPane.setLayout(new BoxLayout(infoPane, BoxLayout.Y_AXIS));
 		infoPane.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		
-		modifyTitle = new JLabel();        // Depends on what location to modify
-		modifyTitle.setBackground(lightBackColor);
-		changeLocScreen2.add(modifyTitle, BorderLayout.NORTH);
+		infoPane.setBackground(lightBackColor);
 		
 		modifiedNameLabel = new JLabel("Enter the new name: ");
 		infoPane.add(modifiedNameLabel);
@@ -578,20 +628,36 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		modifiedLongField = new JTextField(20);
 		infoPane.add(modifiedLongField);
 		
-		JPanel sidePane2 = new JPanel(new FlowLayout());                
+		JPanel sidePane2 = new JPanel(new FlowLayout()); 
+		sidePane2.setBackground(lightBackColor);
 		submitButton4 = new JButton("Submit the new location.");
 		sidePane2.add(submitButton4);
 		
+		JPanel modifyErrorPanel = new JPanel();
+		modifyErrorPanel.setLayout(new BoxLayout(modifyErrorPanel, BoxLayout.Y_AXIS	));
+		
 		emptyFieldsError2 = new JLabel("You must enter something in each field.");
 		emptyFieldsError2.setForeground(Color.red);
-		changeLocScreen2.add(emptyFieldsError2, BorderLayout.SOUTH);
 		emptyFieldsError2.setVisible(false);
+		modifyErrorPanel.add(emptyFieldsError2);
+		
+		badLatOrLongError2 = new JLabel("You have entered an invalid latitude or longitude.");
+		badLatOrLongError2.setForeground(Color.red);
+		badLatOrLongError2.setVisible(false);
+		modifyErrorPanel.add(badLatOrLongError2);
+		
+		commaError4 = new JLabel("You may not enter a comma in the name.");
+		commaError4.setForeground(Color.red);
+		commaError4.setVisible(false);
+		modifyErrorPanel.add(commaError4);
 		
 		changeLocScreen2.add(infoPane);
 		changeLocScreen2.add(sidePane2, BorderLayout.EAST);
+		changeLocScreen2.add(modifyErrorPanel, BorderLayout.SOUTH);
 		
 		// Set up admin screen - can choose if want to change locations or continue
 		adminScreen = new JPanel(null);
+		adminScreen.setBackground(lightBackColor);
 		
 		addLocationButton = new JButton("Add New Location");
 		addLocationButton.setSize(200, 50);
@@ -612,6 +678,11 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		continueButton.setSize(200, 50);
 		continueButton.setLocation(300, 350);
 		adminScreen.add(continueButton);
+		
+		helpButton6 = new JButton("HELP");
+		helpButton6.setSize(100, 30);
+		helpButton6.setLocation(600, 5);
+		adminScreen.add(helpButton6);
 		
 		
 		// Allows something to happen when you press the button
@@ -643,7 +714,7 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		helpButton3.addActionListener(this);
 		helpButton4.addActionListener(this);
 		helpButton5.addActionListener(this);
-		//helpButton6.addActionListener(this);
+		helpButton6.addActionListener(this);
 		
 		// Add all the "cards" or different screens to the deck
 		cards.add(loginScreen, "Login");
@@ -686,754 +757,812 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		// Make the buttons do things
 		public void actionPerformed(ActionEvent e)
 		{
-		// Click register to create a new account
-		if (e.getSource() == registerButton)
-		{
+			// Click register to create a new account
+			if (e.getSource() == registerButton)
+			{
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Create new account");         
+			}
+			else if (e.getSource() == helpButton1 || e.getSource() == helpButton2 ||
+					e.getSource() == helpButton3 || e.getSource() == helpButton4 ||
+					e.getSource() == helpButton5 || e.getSource() == helpButton6)
+			{
+				URL index = ClassLoader.getSystemResource("helpInfo.html");
+			    new HelpWindow("Help", index);
+			}
+			// Click back from the new account page to get back to the login screen
+			else if (e.getSource() == backButton1)
+			{
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Login");
+			}
+			// Go back from start locations page to all locations page
+			else if (e.getSource() == backButton2)
+			{
+				showLocationScreen();
+			}
+			// Go back from stop locations page to start location page
+			else if (e.getSource() == backButton3)
+			{
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Start Location");
+			}
+			// From the add location screen back to all locations screen
+			else if (e.getSource() == backButton4)
+			{
+				badLatOrLongError.setVisible(false);
+				existingLocError.setVisible(false);
+				emptyFieldsError.setVisible(false);
+				
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Admin Screen");
+			}
+			// From the remove location screen to all locations screen
+			else if (e.getSource() == backButton5)
+			{
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Admin Screen");
+			}
+			// From the modify location screen to all location screen
+			else if (e.getSource() == backButton6)
+			{
+				// Remove all the radiobuttons from the panel because they get re-added each time
+				for (int n = 0; n < modifyLocButtons.size(); n++)
+				{
+			        modifyLocGroup.remove(modifyLocButtons.get(n));
+			        modifyPanel.remove(modifyLocButtons.get(n));
+				}
+				modifyLocButtons.clear();
+			
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Admin Screen");
+			}
+			// Creates a new user account
+			if (e.getSource() == createAccountButton)
+			{
+			    userExists.setVisible(false);
+				passwordsNotSame.setVisible(false);
+				emptyPassword.setVisible(false);
+				
+				String newUsernameFromGui = newUsernameField.getText().trim();
+				String newPasswordFromGui = newPasswordField.getText().trim();
+				String newPasswordAgainFromGui = reenterPasswordField.getText().trim();
+				userName = newUsernameFromGui;
+				if (!newPasswordFromGui.equals(newPasswordAgainFromGui))
+				{
+					badUserLabel.setVisible(false);
+					commaError2.setVisible(false);
+				    passwordsNotSame.setVisible(true);
+				    validate();
+				}
+				else if (newUsernameFromGui.equals("") || newPasswordFromGui.equals("") ||
+				            newPasswordAgainFromGui.equals(""))
+				{
+					badUserLabel.setVisible(false);
+					commaError2.setVisible(false);
+				    emptyPassword.setVisible(true);
+				    validate();
+				}
+				else if (containsComma(newUsernameFromGui) || containsComma(newPasswordFromGui) ||
+						containsComma(newPasswordAgainFromGui))
+				{
+					badUserLabel.setVisible(false);
+					emptyPassword.setVisible(false);
+					commaError2.setVisible(true);
+					validate();
+				}
+				else
+				{                 
+				      try
+				      {
+				      // Check if the user has an account
+				      boolean usernameExists = false;
+				      
+				      BufferedReader buffReader = new BufferedReader(new FileReader("users.txt"));
+				     
+				             // Read in each line from the users file
+				     String line = buffReader.readLine();
+				     
+				     while (line != null)
+				     {
+				             // Each line has comma separated values of username, password, A/U
+				             // Make that into a user and add to the array
+					      String delimiter = "[,]+";
+					      String[] userTokens = line.split(delimiter);
+					      
+					      for (int i = 0; i < userTokens.length; i++)
+					      {
+					              String usernameFromFile = userTokens[i];
+					              usernameFromFile = usernameFromFile.trim();
+					              i++;        // pass the password
+					              i++;        // pass the user/admin letter
+					              if (usernameFromFile.equals(newUsernameFromGui))
+					              {
+					                      usernameExists = true;
+					                      userName = usernameFromFile;
+					              }
+					       }
+					             
+					       line = buffReader.readLine();                         
+				     }
+				     
+				     if (usernameExists)
+				     {
+				             throw new BadUserException("This account already exists");
+				     }
+				     else
+				     {
+				             // Add the new user to the user file
+				             // Right now the users get added as regular users. Admins must be added manually.
+				             BufferedWriter out;
+				                            
+				             out = new BufferedWriter(new FileWriter("users.txt", true));
+				             out.write(newUsernameFromGui + ", " + newPasswordFromGui + ", U\n");
+				             out.close();
+				             
+				             // Go to the next screen
+				             showLocationScreen();
+				     }        
+				     
+				     buffReader.close();
+				            }
+				            catch (FileNotFoundException e1)
+				            {
+				                    e1.printStackTrace();
+				            }
+				            catch (IOException e2)
+				            {
+				                    e2.printStackTrace();
+				            }
+				            catch (BadUserException e3)
+				            {
+				                    userExists.setVisible(true);
+				                    validate();
+				            }
+					}
+				}
+				// Click "login" to get to the location menu
+				if (e.getSource() == loginButton)
+				{
+					String usernameFromGui = usernameField.getText().trim();
+					String passwordFromGui = passwordField.getText().trim();
+					userName = usernameFromGui;
+					User enteredUser = new User(usernameFromGui, passwordFromGui, false);
+					
+					// Each line should have a new user
+					try
+					{
+					    BufferedReader buffReader = new BufferedReader(new FileReader("users.txt"));
+					    
+					    // An array of users already entered into the file "users.txt"
+					        ArrayList<User> users = new ArrayList<User>();
+					    
+					        // Read in each line from the users file
+					    String line = buffReader.readLine();
+					    
+					    while (line != null)
+					    {
+					            // Each line has comma separated values of username, password, A/U
+					            // Make that into a user and add to the array
+					     String delimiter = "[,]+";
+					     String[] userTokens = line.split(delimiter);
+					     
+					     for (int i = 0; i < userTokens.length; i++)
+					     {
+					             String usernameFromFile = userTokens[i];
+					             usernameFromFile = usernameFromFile.trim();
+					             i++;
+					             String passwordFromFile = userTokens[i];
+					             passwordFromFile = passwordFromFile.trim();
+					             i++;
+					             String isAdminFromFile = userTokens[i];
+					             isAdminFromFile = isAdminFromFile.trim();
+					             boolean admin = false;
+					             if (isAdminFromFile.equals("A") || isAdminFromFile.equals("a"))
+					             {
+					                     admin = true;
+					             }
+					             users.add(new User(usernameFromFile, passwordFromFile, admin));
+					      }
+					      line = buffReader.readLine();                         
+					 }
+					    
+					    // Check if the user has an account
+					 boolean userExists = false;
+					 boolean userIsAdmin = false;
+					 for (int j = 0; j < users.size(); j++)
+					 {
+					         if (users.get(j).equals(enteredUser))
+					         {
+					                 userExists = true;
+					                 if (users.get(j).isAdmin)
+					                 {
+					                         userIsAdmin = true;
+					                 }
+					         }
+					 }
+					 
+					 // If the username or password are incorrect
+					 if (!userExists)
+					 {
+					         throw new BadUserException();
+					 }
+					 else if (containsComma(usernameFromGui) || containsComma(passwordFromGui))
+					 {
+						 	commaError1.setVisible(true);
+					 }
+					 // Otherwise, continue to the next screen
+					 else
+					 {
+					         // Show an extra screen to modify things if the user has admin privileges
+					         if (userIsAdmin == true)
+					         {
+					        	 CardLayout cl = (CardLayout)(cards.getLayout());
+					        	 cl.show(cards, "Admin Screen");                                  
+					         }
+					         else
+					         {
+					               showLocationScreen();
+					         }
+					    
+					    buffReader.close();
+					 }
+					}
+					catch(FileNotFoundException fnf)
+					{
+					System.out.println("Unable to open 'users.txt'");                                
+					}
+					catch(IOException io)
+					{
+					io.printStackTrace();
+					}
+					catch(BadUserException bu)
+					{
+					    badUserLabel.setVisible(true);
+					    validate();
+					}
+				}
+			// Go from picking all locations to picking start location
+			if (e.getSource() == nextScreenButton1)
+			{         
+				if (checkedBoxes.size() < MIN_LOCATIONS_CHECKED)
+				{
+				    needMoreLocError.setVisible(true);
+				    validate();
+				    repaint();
+				}
+				else
+				{         
+				    // Make radio buttons for the start location choices
+				    
+				    for (int i = 0; i < checkedBoxes.size(); i++)
+				    {
+				                JRadioButton startRadio = new JRadioButton(checkedBoxes.get(i).getText());
+				                startLocationButtons.add(startRadio);
+				                startLocationGroup.add(startRadio);
+				                startPanel.add(startRadio);
+				    }
+				    CardLayout cl = (CardLayout)(cards.getLayout());
+				    cl.show(cards, "Start Location");
+				}
+			}
+			// Go from picking start location to picking stop location
+			else if (e.getSource() == nextScreenButton2)
+			{
+				if (startLocationGroup.getSelection() == null)
+				{
+				        selectStartError.setVisible(true);
+				        validate();
+				}
+				else
+				{
+				        for (int i = 0; i < startLocationButtons.size(); i++)
+				        {
+				                if (!startLocationButtons.get(i).isSelected())
+				                {
+				                        stopLocationButtons.add(startLocationButtons.get(i));
+				                        stopLocationGroup.add(startLocationButtons.get(i));
+				                        stopPanel.add(startLocationButtons.get(i));
+				                }
+				                else
+				                {
+				                        startLocation = getLocation(startLocationButtons.get(i).getText());
+				                }
+				        }
+				        
+				        CardLayout cl = (CardLayout)(cards.getLayout());
+				        cl.show(cards, "Stop Location");
+				}
+			}
+			// Last next button - launch the application
+			else if (e.getSource() == nextScreenButton3)
+			{
+				if (stopLocationGroup.getSelection() == null)
+				{
+				    JLabel selectStopError = new JLabel("You must choose an end location");
+				    selectStopError.setForeground(Color.red);
+				    stopLocationScreen.add(selectStopError, BorderLayout.SOUTH);
+				    validate();
+				}
+				else
+				{
+				    
+				    for (int i = 0; i < stopLocationButtons.size(); i++)
+				    {
+				            if (stopLocationButtons.get(i).isSelected())
+				            {
+				                    stopLocation = getLocation(stopLocationButtons.get(i).getText());
+				            }
+				    }
+				             
+				    ArrayList<Location> trip = getTrip();
+				    
+				    
+				    trip = ShortestDistance.getShortestPath(trip);
+				    
+				
+				
+				    try
+				    {
+				            PathToKML.createPath(trip, userName);
+				    }
+				    catch (FileNotFoundException e1) 
+				    {
+				    	e1.printStackTrace();
+				    }
+				    String path = new File(LoginGui.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
+				    String programLoc = path + "\\client\\googleearth.exe";
+				    String fileLoc = path + "\\" + userName + ".kml";
+				    PathToKML.openFile(programLoc, fileLoc);
+				
+				    PathToKML.openFile(programLoc, fileLoc);
+				    
+				    // If the fields aren't empty, email the trip to the user
+				    if (!emailField.getText().equals("") && !dateField.getText().equals(""))
+				    {
+				    	String email = emailField.getText();
+				        String date = dateField.getText();
+				        
+				        String title = "Scheduled trip for " + date;
+				        String message = "You have a schedule'd trip for " + date + ".\nHere is your trip's order of locations:\n";
+				        int count = 1;
+				        for(Location a: trip)
+				        {
+				                message += "\t" + count++ + ".) " + a.getName() + "\n";
+				        }
+				        try 
+				        {
+				        	GoogleMail.Send("CodeToJoy.345", "cmsc345pw", email, title, message);
+				        } 
+				        catch (AddressException e1) 
+				        {
+				                        // TODO Auto-generated catch block
+				                        e1.printStackTrace();
+				        } 
+				        catch (MessagingException e1) 
+				        {
+				                        // TODO Auto-generated catch block
+				                        e1.printStackTrace();
+				        }
+				    }
+				
+				
+				    e.setSource(logoutButton1);
+				    
+				
+				}
+			
+			}
+			
+			// Click "logout" from the application screen to go back to login screen
+			if (e.getSource() == logoutButton1 || e.getSource() == logoutButton2 ||
+			    e.getSource() == logoutButton3)
+			{
+			
+				for (int i = 0; i < allLocCheckBoxes.size(); i++)
+				{
+				    allLocCheckBoxes.get(i).setSelected(false);
+				}
+				
+				//allLocCheckBoxes.clear();
+				for (int j = 0; j < checkedBoxes.size(); j++)
+				{
+				    checkedBoxes.get(j).setSelected(false);
+				}
+				checkedBoxes.clear();
+				//locations.clear();
+				
+				usernameField.setText("");
+				passwordField.setText("");
+				newUsernameField.setText("");
+				newPasswordField.setText("");
+				reenterPasswordField.setText("");
+				badLatOrLongError.setVisible(false);
+				existingLocError.setVisible(false);
+				emptyFieldsError.setVisible(false);
+				
+				// Takes all the buttons out of the group, then clears all the buttons
+				int numStartButtons = startLocationGroup.getButtonCount();
+				for (int k = 0; k < numStartButtons; k++)
+				{
+				    startLocationGroup.remove(startLocationButtons.get(k));
+				    startPanel.remove(startLocationButtons.get(k));
+				}
+				startLocationButtons.clear();
+				
+				int numStopButtons = stopLocationGroup.getButtonCount();
+				for (int m = 0; m < numStopButtons; m++)
+				{
+				    stopLocationGroup.remove(stopLocationButtons.get(m));
+				    stopPanel.remove(stopLocationButtons.get(m));
+				}
+				stopLocationButtons.clear();
+				
+				needMoreLocError.setVisible(false);
+				badUserLabel.setVisible(false);
+				passwordsNotSame.setVisible(false);
+				selectStartError.setVisible(false);
+				
+				// Remove all the checkboxes from the panel because they get re-added each time
+				for (int n = 0; n < allLocCheckBoxes.size(); n++)
+				{
+				        removeLocPanel.remove(allLocCheckBoxes.get(n));
+				}
+				
+				
+				// Remove all the checkboxes from the panel because they get re-added each time
+				for (int p = 0; p < allLocCheckBoxes.size(); p++)
+				{
+				        checkPanel.remove(allLocCheckBoxes.get(p));
+				}
+				
+				
+				// Remove all the radiobuttons from the panel because they get re-added each time
+				for (int n = 0; n < modifyLocButtons.size(); n++)
+				{
+				        modifyPanel.remove(modifyLocButtons.get(n));
+				        modifyLocGroup.remove(modifyLocButtons.get(n));
+				}
+				
+				validate();
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Login");
+			}
+			
+			// Admin can add a new location to the list
+			else if (e.getSource() == addLocationButton)
+			{
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "New Location");
+			}
+			// Add the new location to the file and go back to the admin screen
+			else if (e.getSource() == submitButton1)
+			{
+				// Get the input from the gui
+				String getName = newLocNameField.getText();
+				getName = getName.trim();
+				String getLat = newLocLatField.getText();
+				getLat = getLat.trim();
+				String getLong = newLocLongField.getText();
+				getLong = getLong.trim();
+			
+			
+			
+				// Make sure the location does not already exist in the file
+				// Maybe because cannot add two widget to the same space.
+				if (getLocation(getName) != null)
+				{
+				    emptyFieldsError.setVisible(false);
+				    badLatOrLongError.setVisible(false);
+				    commaError3.setVisible(false);
+				    existingLocError.setVisible(true);
+				    validate();
+				}
+				else if (containsComma(getName))
+				{
+				    emptyFieldsError.setVisible(false);
+				    badLatOrLongError.setVisible(false);
+				    existingLocError.setVisible(false);
+					commaError3.setVisible(true);
+					validate();
+				}
+				// Make sure the user has entered something in each field
+				else if (getName.equals("") || getLat.equals("") || getLong.equals(""))
+				{
+				    existingLocError.setVisible(false);
+				    badLatOrLongError.setVisible(false);
+				    commaError3.setVisible(false);
+				    emptyFieldsError.setVisible(true);
+				    validate();
+				}
+				else if (!isValidLat(getLat) || !isValidLong(getLong))
+				{
+					existingLocError.setVisible(false);
+					emptyFieldsError.setVisible(false);
+					commaError3.setVisible(false);
+					badLatOrLongError.setVisible(true);
+				}
+				// If not, we're good to go. Add it to the file.
+				// Idk why else isn't working correctly
+				//if (getLocation(getName) == null && (!(getName.equals("") || getLat.equals("") || getLong.equals(""))))
+				else
+				{
+				    BufferedWriter writeToLocFile;
+				    try
+				    {
+				            writeToLocFile = new BufferedWriter(new FileWriter("locations.txt", true));
+				            writeToLocFile.write(getName + ", " + getLat + ", " + getLong + "\n");
+				            writeToLocFile.close();
+				    }
+				    catch(IOException e1)
+				    {
+				            e1.printStackTrace();
+				    }
+				    
+				    // Remove all the checkboxes from the panel because they get re-added each time
+				    for (int i = 0; i < allLocCheckBoxes.size(); i++)
+				    {
+				            removeLocPanel.remove(allLocCheckBoxes.get(i));
+				    }
+				    
+				    // Go to the next screen
+				CardLayout cl = (CardLayout)(cards.getLayout());
+				cl.show(cards, "Admin Screen");
+			}
+			}
+			// Admin can remove a location from the list
+			else if (e.getSource() == removeLocationButton)
+			{        
+			// Remove all the checkboxes from the panel because they get re-added each time
+			for (int n = 0; n < allLocCheckBoxes.size(); n++)
+			{
+			        removeLocPanel.remove(allLocCheckBoxes.get(n));
+			}
+			allLocCheckBoxes.clear();
+			
+			locations = createLocationList();
+			
+			// For each location in the file, make it into a checkbox
+			for (int j = 0; j < locations.size(); j++)
+			{
+			        JCheckBox locCheck = new JCheckBox(locations.get(j).getName());
+			        locCheck.addItemListener(this);
+			        locCheck.setSelected(false);
+			        allLocCheckBoxes.add(locCheck);
+			}
+			
+			// Add each checkbox to the panel on the locations screen
+			for (int k = 0; k < allLocCheckBoxes.size(); k++)
+			{
+			        removeLocPanel.add(allLocCheckBoxes.get(k));
+			}
+			
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, "Create new account");         
-		}
-		else if (e.getSource() == helpButton1 ||e.getSource() == helpButton2 ||e.getSource() == helpButton3 ||e.getSource() == helpButton4 ||e.getSource() == helpButton5)
-		{
-			URL index = ClassLoader.getSystemResource("helpInfo.html");
-		    new HelpWindow("Help", index);
-		}
-		// Click back from the new account page to get back to the login screen
-		else if (e.getSource() == backButton1)
-		{
+			cl.show(cards, "Remove Location");
+			
+			}
+			// Remove the selected locations from the file
+			else if (e.getSource() == submitButton2)
+			{
+			try
+			{
+			File inputFile = new File("locations.txt");
+			File tempFile = new File("temp.txt");
+			
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+			
+			String currentLine;
+			
+			while((currentLine = reader.readLine()) != null)
+			{
+			// Search the location checked to remove
+			String trimmedLine = currentLine.trim();
+			boolean canDelete = false;
+			for (int i = 0; i < checkedBoxes.size(); i++)
+			{
+			        if (trimmedLine.startsWith(checkedBoxes.get(i).getText()))
+			        {
+			                canDelete = true;
+			        }
+			}
+			
+			// If the location in the line was not one of those checked,
+			// rewrite it to the temporary file.
+			if(!canDelete)
+			{
+			        writer.write(currentLine + "\n");
+			}
+			}
+			writer.close();
+			reader.close();
+			
+			if(!inputFile.delete())
+			{
+			    System.out.println("Cannot remove.");
+			}
+			
+			if(!tempFile.renameTo(inputFile))
+			{
+			    System.out.println("Cannot rename");
+			}
+			
+			    // Remove all the checkboxes from the panel because they get re-added each time
+			    for (int i = 0; i < allLocCheckBoxes.size(); i++)
+			    {
+			            removeLocPanel.remove(allLocCheckBoxes.get(i));
+			    }
+			}
+			catch(Exception e1)
+			{
+			e1.printStackTrace();
+			}
+			
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, "Login");
-		}
-		// Go back from start locations page to all locations page
-		else if (e.getSource() == backButton2)
-		{
-			showLocationScreen();
-		}
-		// Go back from stop locations page to start location page
-		else if (e.getSource() == backButton3)
-		{
+			cl.show(cards, "Admin Screen");
+			}
+			// Admin can modify a location in the list
+			else if (e.getSource() == changeLocationButton)
+			{
+			// Remove all the radiobuttons from the panel because they get re-added each time
+			for (int n = 0; n < modifyLocButtons.size(); n++)
+			{
+			        modifyLocGroup.remove(modifyLocButtons.get(n));
+			        modifyPanel.remove(modifyLocButtons.get(n));
+			}
+			modifyLocButtons.clear();
+			
+			locations = createLocationList();
+			
+			// For each location in the file, make it into a radio button
+			for (int j = 0; j < locations.size(); j++)
+			{
+			        JRadioButton locRadio = new JRadioButton(locations.get(j).getName());
+			        locRadio.setSelected(false);
+			        modifyLocButtons.add(locRadio);
+			}
+			
+			// Add each radio button to the panel on the change locations screen
+			for (int k = 0; k < modifyLocButtons.size(); k++)
+			{
+			        modifyLocGroup.add(modifyLocButtons.get(k));
+			        modifyPanel.add(modifyLocButtons.get(k));
+			}
+			
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, "Start Location");
-		}
-		// From the add location screen back to all locations screen
-		else if (e.getSource() == backButton4)
-		{
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		// From the remove location screen to all locations screen
-		else if (e.getSource() == backButton5)
-		{
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		// From the modify location screen to all location screen
-		else if (e.getSource() == backButton6)
-		{
-		// Remove all the radiobuttons from the panel because they get re-added each time
-		for (int n = 0; n < modifyLocButtons.size(); n++)
-		{
-		        modifyLocGroup.remove(modifyLocButtons.get(n));
-		        modifyPanel.remove(modifyLocButtons.get(n));
-		}
-		modifyLocButtons.clear();
+			cl.show(cards, "Modify Location");
+			}
+			// Submit a location to modify
+			else if (e.getSource() == submitButton3)
+			{
+			// Get the chosen button
+			boolean buttonSelected = false;
+			for (int i = 0; i < modifyLocButtons.size(); i++)
+			{
+			    if (modifyLocButtons.get(i).isSelected())
+			    {
+			            chosenModifyLocButton = modifyLocButtons.get(i);
+			            buttonSelected = true;
+			    }
+			}
+			
+			if (!buttonSelected)
+			{
+			    chooseLocError.setVisible(true);
+			    validate();
+			}
+			else
+			{
+			    modifyTitle.setText("Selected location to modify: " + chosenModifyLocButton.getText());
+			    validate();
+			
+			    CardLayout cl = (CardLayout)(cards.getLayout());
+			    cl.show(cards, "Modify Chosen Location");
+			}
+			}
+			// Show the screen to enter new info to modify location
+			else if (e.getSource() == submitButton4)
+			{
+				// Remove all the radiobuttons from the panel because they get re-added each time
+				for (int n = 0; n < modifyLocButtons.size(); n++)
+				{
+				        modifyLocGroup.remove(modifyLocButtons.get(n));
+				        modifyPanel.remove(modifyLocButtons.get(n));
+				}
+				modifyLocButtons.clear();
+				
+				String modifiedLocName = modifiedNameField.getText();
+				modifiedLocName = modifiedLocName.trim();
+				String modifiedLocLat = modifiedLatField.getText();
+				modifiedLocLat = modifiedLocLat.trim();
+				String modifiedLocLong = modifiedLongField.getText();
+				modifiedLocLong = modifiedLocLong.trim();
+				
+				// Make sure all the fields aren't empty
+				if (modifiedLocName.equals("") || modifiedLocLat.equals("") || modifiedLocLong.equals(""))
+				{
+					badLatOrLongError2.setVisible(false);
+					commaError4.setVisible(false);
+				    emptyFieldsError2.setVisible(true);
+				    validate();
+				}
+				else if (!isValidLat(modifiedLocLat) || !isValidLong(modifiedLocLong))
+				{
+					emptyFieldsError2.setVisible(false);
+					commaError4.setVisible(false);
+					badLatOrLongError2.setVisible(true);
+					validate();
+				}
+				else if (containsComma(modifiedLocName))
+				{
+					emptyFieldsError2.setVisible(false);
+					badLatOrLongError2.setVisible(false);
+					commaError4.setVisible(true);
+					validate();
+				}
+				// Else, find that line in the file, and rewrite as given
+				// Continue back to the admin screen
+				else
+				{
+					try
+					{
+					File inputFile = new File("locations.txt");
+					File tempFile = new File("temp.txt");
+					
+					BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+					BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+					
+					String currentLine;
+					
+					while((currentLine = reader.readLine()) != null)
+					{
+					    // Search the location checked to remove
+					    String trimmedLine = currentLine.trim();
+					    boolean canDelete = false;
+					    if (trimmedLine.startsWith(chosenModifyLocButton.getText()))
+					    {
+					            canDelete = true;
+					    }
+					    
+					    // If the location in the line was not the one to be modified, just rewrite it
+					    if(!canDelete)
+					    {
+					            writer.write(currentLine + "\n");
+					    }
+					    // Otherwise, modify it and write it to the file
+					    else
+					    {
+					            writer.write(modifiedLocName + ", " + modifiedLocLat + ", " + modifiedLocLong + "\n");
+					    }
+					}
+					writer.close();
+					reader.close();
+					
+					// Delete the original file
+					if(!inputFile.delete())
+					{
+					        System.out.println("Cannot remove.");
+					}
+					// Rename the temporary file as the original
+					if(!tempFile.renameTo(inputFile))
+					{
+					        System.out.println("Cannot rename");
+					}
+					}
+					catch(Exception e1)
+					{
+					    e1.printStackTrace();
+					}
+					    
+					CardLayout cl = (CardLayout)(cards.getLayout());
+					cl.show(cards, "Admin Screen");
+				}
+			}
+			else if (e.getSource() == continueButton)
+			{
+				showLocationScreen();
+			}
 		
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		// Creates a new user account
-		if (e.getSource() == createAccountButton)
-		{
-		    userExists.setVisible(false);
-		passwordsNotSame.setVisible(false);
-		emptyPassword.setVisible(false);
-		
-		String newUsernameFromGui = newUsernameField.getText().trim();
-		String newPasswordFromGui = newPasswordField.getText().trim();
-		String newPasswordAgainFromGui = reenterPasswordField.getText().trim();
-		userName = newUsernameFromGui;
-		if (!newPasswordFromGui.equals(newPasswordAgainFromGui))
-		{
-		    passwordsNotSame.setVisible(true);
-		    validate();
-		}
-		else if (newUsernameFromGui.equals("") || newPasswordFromGui.equals("") ||
-		            newPasswordAgainFromGui.equals(""))
-		{
-		    emptyPassword.setVisible(true);
-		    validate();
-		}
-		else
-		{                 
-		            try
-		            {
-		                    // Check if the user has an account
-		      boolean usernameExists = false;
-		      
-		      BufferedReader buffReader = new BufferedReader(new FileReader("users.txt"));
-		     
-		             // Read in each line from the users file
-		     String line = buffReader.readLine();
-		     
-		     while (line != null)
-		     {
-		             // Each line has comma separated values of username, password, A/U
-		             // Make that into a user and add to the array
-		      String delimiter = "[,]+";
-		      String[] userTokens = line.split(delimiter);
-		      
-		      for (int i = 0; i < userTokens.length; i++)
-		      {
-		              String usernameFromFile = userTokens[i];
-		              usernameFromFile = usernameFromFile.trim();
-		              i++;        // pass the password
-		              i++;        // pass the user/admin letter
-		              if (usernameFromFile.equals(newUsernameFromGui))
-		              {
-		                      usernameExists = true;
-		                      userName = usernameFromFile;
-		              }
-		      }
-		             
-		             line = buffReader.readLine();                         
-		     }
-		     
-		     if (usernameExists)
-		     {
-		             throw new BadUserException("This account already exists");
-		     }
-		     else
-		     {
-		             // Add the new user to the user file
-		             // Right now the users get added as regular users. Admins must be added manually.
-		             BufferedWriter out;
-		                            
-		                            out = new BufferedWriter(new FileWriter("users.txt", true));
-		             out.write(newUsernameFromGui + ", " + newPasswordFromGui + ", U\n");
-		             out.close();
-		             
-		             // Go to the next screen
-		     CardLayout cl = (CardLayout)(cards.getLayout());
-		     cl.show(cards, "Locations");
-		     }        
-		     
-		     buffReader.close();
-		            }
-		            catch (FileNotFoundException e1)
-		            {
-		                    e1.printStackTrace();
-		            }
-		            catch (IOException e2)
-		            {
-		                    e2.printStackTrace();
-		            }
-		            catch (BadUserException e3)
-		            {
-		                    userExists.setVisible(true);
-		                    validate();
-		            }
-		}
-		}
-		// Click "login" to get to the location menu
-		if (e.getSource() == loginButton)
-		{
-		String usernameFromGui = usernameField.getText();
-		usernameFromGui = usernameFromGui.trim();
-		String passwordFromGui = passwordField.getText();
-		passwordFromGui = passwordFromGui.trim();
-		userName = usernameFromGui;
-		User enteredUser = new User(usernameFromGui, passwordFromGui, false);
-		
-		// Each line should have a new user
-		try
-		{
-		    BufferedReader buffReader = new BufferedReader(new FileReader("users.txt"));
-		    
-		    // An array of users already entered into the file "users.txt"
-		        ArrayList<User> users = new ArrayList<User>();
-		    
-		        // Read in each line from the users file
-		    String line = buffReader.readLine();
-		    
-		    while (line != null)
-		    {
-		            // Each line has comma separated values of username, password, A/U
-		            // Make that into a user and add to the array
-		     String delimiter = "[,]+";
-		     String[] userTokens = line.split(delimiter);
-		     
-		     for (int i = 0; i < userTokens.length; i++)
-		     {
-		             String usernameFromFile = userTokens[i];
-		             usernameFromFile = usernameFromFile.trim();
-		             i++;
-		             String passwordFromFile = userTokens[i];
-		             passwordFromFile = passwordFromFile.trim();
-		             i++;
-		             String isAdminFromFile = userTokens[i];
-		             isAdminFromFile = isAdminFromFile.trim();
-		             boolean admin = false;
-		             if (isAdminFromFile.equals("A") || isAdminFromFile.equals("a"))
-		             {
-		                     admin = true;
-		             }
-		             users.add(new User(usernameFromFile, passwordFromFile, admin));
-		     }
-		            
-		            line = buffReader.readLine();                         
-		    }
-		    
-		    // Check if the user has an account
-		 boolean userExists = false;
-		 boolean userIsAdmin = false;
-		 for (int j = 0; j < users.size(); j++)
-		 {
-		         if (users.get(j).equals(enteredUser))
-		         {
-		                 userExists = true;
-		                 if (users.get(j).isAdmin)
-		                 {
-		                         userIsAdmin = true;
-		                 }
-		         }
-		 }
-		 
-		 // If the username or password are incorrect
-		 if (!userExists)
-		 {
-		         throw new BadUserException();
-		 }
-		 // Otherwise, continue to the next screen
-		 else
-		 {
-		         // Show an extra screen to modify things if the user has admin privileges
-		         if (userIsAdmin == true)
-		         {
-		 CardLayout cl = (CardLayout)(cards.getLayout());
-		 cl.show(cards, "Admin Screen");                                  
-		         }
-		         else
-		         {
-		                 showLocationScreen();
-		         }
-		    
-		    buffReader.close();
-		 }
-		}
-		catch(FileNotFoundException fnf)
-		{
-		System.out.println("Unable to open 'users.txt'");                                
-		}
-		catch(IOException io)
-		{
-		io.printStackTrace();
-		}
-		catch(BadUserException bu)
-		{
-		    badUserLabel.setVisible(true);
-		    validate();
-		}
-		}
-		// Go from picking all locations to picking start location
-		if (e.getSource() == nextScreenButton1)
-		{         
-		if (checkedBoxes.size() < MIN_LOCATIONS_CHECKED)
-		{
-		    needMoreLocError.setVisible(true);
-		    validate();
-		    repaint();
-		}
-		else
-		{         
-		    // Make radio buttons for the start location choices
-		    
-		    for (int i = 0; i < checkedBoxes.size(); i++)
-		    {
-		                JRadioButton startRadio = new JRadioButton(checkedBoxes.get(i).getText());
-		                startLocationButtons.add(startRadio);
-		                startLocationGroup.add(startRadio);
-		                startPanel.add(startRadio);
-		    }
-		    CardLayout cl = (CardLayout)(cards.getLayout());
-		    cl.show(cards, "Start Location");
-		}
-		}
-		// Go from picking start location to picking stop location
-		else if (e.getSource() == nextScreenButton2)
-		{
-		if (startLocationGroup.getSelection() == null)
-		{
-		        selectStartError.setVisible(true);
-		        validate();
-		}
-		else
-		{
-		        for (int i = 0; i < startLocationButtons.size(); i++)
-		        {
-		                if (!startLocationButtons.get(i).isSelected())
-		                {
-		                        stopLocationButtons.add(startLocationButtons.get(i));
-		                        stopLocationGroup.add(startLocationButtons.get(i));
-		                        stopPanel.add(startLocationButtons.get(i));
-		                }
-		                else
-		                {
-		                        startLocation = getLocation(startLocationButtons.get(i).getText());
-		                }
-		        }
-		        
-		        CardLayout cl = (CardLayout)(cards.getLayout());
-		        cl.show(cards, "Stop Location");
-		}
-		}
-		// Last next button - launch the application
-		else if (e.getSource() == nextScreenButton3)
-		{
-		if (stopLocationGroup.getSelection() == null)
-		{
-		    JLabel selectStopError = new JLabel("You must choose an end location");
-		    selectStopError.setForeground(Color.red);
-		    stopLocationScreen.add(selectStopError, BorderLayout.SOUTH);
-		    validate();
-		}
-		else
-		{
-		    
-		    for (int i = 0; i < stopLocationButtons.size(); i++)
-		    {
-		            if (stopLocationButtons.get(i).isSelected())
-		            {
-		                    stopLocation = getLocation(stopLocationButtons.get(i).getText());
-		            }
-		    }
-		             
-		    ArrayList<Location> trip = getTrip();
-		    
-		    
-		    trip = ShortestDistance.getShortestPath(trip);
-		    
-		
-		
-		    try
-		    {
-		            PathToKML.createPath(trip, userName);
-		    }
-		    catch (FileNotFoundException e1) 
-		    {
-		    	e1.printStackTrace();
-		    }
-
-		    String path = new File(LoginGui.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
-		    String programLoc = path + "\\client\\googleearth.exe";
-		    String fileLoc = path + "\\" + userName + ".kml";
-		    PathToKML.openFile(programLoc, fileLoc);
-		    
-		    // If the fields aren't empty, email the trip to the user
-		    if (!emailField.getText().equals("") && !dateField.getText().equals(""))
-		    {
-		    	String email = emailField.getText();
-		        String date = dateField.getText();
-		        
-		        String title = "Scheduled trip for " + date;
-		        String message = "You have a schedule'd trip for " + date + ".\nHere is your trip's order of locations:\n";
-		        int count = 1;
-		        for(Location a: trip)
-		        {
-		                message += "\t" + count++ + ".) " + a.getName() + "\n";
-		        }
-		        try 
-		        {
-		        	GoogleMail.Send("CodeToJoy.345", "cmsc345pw", email, title, message);
-		        } 
-		        catch (AddressException e1) 
-		        {
-		                        // TODO Auto-generated catch block
-		                        e1.printStackTrace();
-		        } 
-		        catch (MessagingException e1) 
-		        {
-		                        // TODO Auto-generated catch block
-		                        e1.printStackTrace();
-		        }
-		    }
-		
-		
-		    e.setSource(logoutButton1);
-		    
-		
-		}
-		
-		}
-		
-		// Click "logout" from the application screen to go back to login screen
-		if (e.getSource() == logoutButton1 || e.getSource() == logoutButton2 ||
-		    e.getSource() == logoutButton3)
-		{
-		
-		for (int i = 0; i < allLocCheckBoxes.size(); i++)
-		{
-		    allLocCheckBoxes.get(i).setSelected(false);
-		}
-		
-		//allLocCheckBoxes.clear();
-		for (int j = 0; j < checkedBoxes.size(); j++)
-		{
-		    checkedBoxes.get(j).setSelected(false);
-		}
-		checkedBoxes.clear();
-		//locations.clear();
-		
-		usernameField.setText("");
-		passwordField.setText("");
-		newUsernameField.setText("");
-		newPasswordField.setText("");
-		reenterPasswordField.setText("");
-		
-		// Takes all the buttons out of the group, then clears all the buttons
-		int numStartButtons = startLocationGroup.getButtonCount();
-		for (int k = 0; k < numStartButtons; k++)
-		{
-		    startLocationGroup.remove(startLocationButtons.get(k));
-		    startPanel.remove(startLocationButtons.get(k));
-		}
-		startLocationButtons.clear();
-		
-		int numStopButtons = stopLocationGroup.getButtonCount();
-		for (int m = 0; m < numStopButtons; m++)
-		{
-		    stopLocationGroup.remove(stopLocationButtons.get(m));
-		    stopPanel.remove(stopLocationButtons.get(m));
-		}
-		stopLocationButtons.clear();
-		
-		needMoreLocError.setVisible(false);
-		badUserLabel.setVisible(false);
-		passwordsNotSame.setVisible(false);
-		selectStartError.setVisible(false);
-		
-		// Remove all the checkboxes from the panel because they get re-added each time
-		for (int n = 0; n < allLocCheckBoxes.size(); n++)
-		{
-		        removeLocPanel.remove(allLocCheckBoxes.get(n));
-		}
-		
-		
-		// Remove all the checkboxes from the panel because they get re-added each time
-		for (int p = 0; p < allLocCheckBoxes.size(); p++)
-		{
-		        checkPanel.remove(allLocCheckBoxes.get(p));
-		}
-		
-		
-		// Remove all the radiobuttons from the panel because they get re-added each time
-		for (int n = 0; n < modifyLocButtons.size(); n++)
-		{
-		        modifyPanel.remove(modifyLocButtons.get(n));
-		        modifyLocGroup.remove(modifyLocButtons.get(n));
-		}
-		
-		validate();
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Login");
-		}
-		
-		// Admin can add a new location to the list
-		else if (e.getSource() == addLocationButton)
-		{
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "New Location");
-		}
-		// Add the new location to the file and go back to the admin screen
-		else if (e.getSource() == submitButton1)
-		{
-		// Get the input from the gui
-		String getName = newLocNameField.getText();
-		getName = getName.trim();
-		String getLat = newLocLatField.getText();
-		getLat = getLat.trim();
-		String getLong = newLocLongField.getText();
-		getLong = getLong.trim();
-		
-		
-		
-		// Make sure the location does not already exist in the file
-		// Maybe because cannot add two widget to the same space.
-		if (getLocation(getName) != null)
-		{
-		    emptyFieldsError.setVisible(false);
-		    existingLocError.setVisible(true);
-		    validate();
-		}
-		// Make sure the user has entered something in each field
-		else if (getName.equals("") || getLat.equals("") || getLong.equals(""))
-		{
-		    existingLocError.setVisible(false);
-		    emptyFieldsError.setVisible(true);
-		    validate();
-		}
-		// If not, we're good to go. Add it to the file.
-		// Idk why else isn't working correctly
-		//if (getLocation(getName) == null && (!(getName.equals("") || getLat.equals("") || getLong.equals(""))))
-		else
-		{
-		    BufferedWriter writeToLocFile;
-		    try
-		    {
-		            writeToLocFile = new BufferedWriter(new FileWriter("locations.txt", true));
-		            writeToLocFile.write(getName + ", " + getLat + ", " + getLong + "\n");
-		            writeToLocFile.close();
-		    }
-		    catch(IOException e1)
-		    {
-		            e1.printStackTrace();
-		    }
-		    
-		    // Remove all the checkboxes from the panel because they get re-added each time
-		    for (int i = 0; i < allLocCheckBoxes.size(); i++)
-		    {
-		            removeLocPanel.remove(allLocCheckBoxes.get(i));
-		    }
-		    
-		    // Go to the next screen
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		}
-		// Admin can remove a location from the list
-		else if (e.getSource() == removeLocationButton)
-		{        
-		// Remove all the checkboxes from the panel because they get re-added each time
-		for (int n = 0; n < allLocCheckBoxes.size(); n++)
-		{
-		        removeLocPanel.remove(allLocCheckBoxes.get(n));
-		}
-		allLocCheckBoxes.clear();
-		
-		locations = createLocationList();
-		
-		// For each location in the file, make it into a checkbox
-		for (int j = 0; j < locations.size(); j++)
-		{
-		        JCheckBox locCheck = new JCheckBox(locations.get(j).getName());
-		        locCheck.addItemListener(this);
-		        locCheck.setSelected(false);
-		        allLocCheckBoxes.add(locCheck);
-		}
-		
-		// Add each checkbox to the panel on the locations screen
-		for (int k = 0; k < allLocCheckBoxes.size(); k++)
-		{
-		        removeLocPanel.add(allLocCheckBoxes.get(k));
-		}
-		
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Remove Location");
-		
-		}
-		// Remove the selected locations from the file
-		else if (e.getSource() == submitButton2)
-		{
-		try
-		{
-		File inputFile = new File("locations.txt");
-		File tempFile = new File("temp.txt");
-		
-		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-		BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-		
-		String currentLine;
-		
-		while((currentLine = reader.readLine()) != null)
-		{
-		// Search the location checked to remove
-		String trimmedLine = currentLine.trim();
-		boolean canDelete = false;
-		for (int i = 0; i < checkedBoxes.size(); i++)
-		{
-		        if (trimmedLine.startsWith(checkedBoxes.get(i).getText()))
-		        {
-		                canDelete = true;
-		        }
-		}
-		
-		// If the location in the line was not one of those checked,
-		// rewrite it to the temporary file.
-		if(!canDelete)
-		{
-		        writer.write(currentLine + "\n");
-		}
-		}
-		writer.close();
-		reader.close();
-		
-		if(!inputFile.delete())
-		{
-		    System.out.println("Cannot remove.");
-		}
-		
-		if(!tempFile.renameTo(inputFile))
-		{
-		    System.out.println("Cannot rename");
-		}
-		
-		    // Remove all the checkboxes from the panel because they get re-added each time
-		    for (int i = 0; i < allLocCheckBoxes.size(); i++)
-		    {
-		            removeLocPanel.remove(allLocCheckBoxes.get(i));
-		    }
-		}
-		catch(Exception e1)
-		{
-		e1.printStackTrace();
-		}
-		
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		// Admin can modify a location in the list
-		else if (e.getSource() == changeLocationButton)
-		{
-		// Remove all the radiobuttons from the panel because they get re-added each time
-		for (int n = 0; n < modifyLocButtons.size(); n++)
-		{
-		        modifyLocGroup.remove(modifyLocButtons.get(n));
-		        modifyPanel.remove(modifyLocButtons.get(n));
-		}
-		modifyLocButtons.clear();
-		
-		locations = createLocationList();
-		
-		// For each location in the file, make it into a radio button
-		for (int j = 0; j < locations.size(); j++)
-		{
-		        JRadioButton locRadio = new JRadioButton(locations.get(j).getName());
-		        locRadio.setSelected(false);
-		        modifyLocButtons.add(locRadio);
-		}
-		
-		// Add each radio button to the panel on the change locations screen
-		for (int k = 0; k < modifyLocButtons.size(); k++)
-		{
-		        modifyLocGroup.add(modifyLocButtons.get(k));
-		        modifyPanel.add(modifyLocButtons.get(k));
-		}
-		
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Modify Location");
-		}
-		// Submit a location to modify
-		else if (e.getSource() == submitButton3)
-		{
-		// Get the chosen button
-		boolean buttonSelected = false;
-		for (int i = 0; i < modifyLocButtons.size(); i++)
-		{
-		    if (modifyLocButtons.get(i).isSelected())
-		    {
-		            chosenModifyLocButton = modifyLocButtons.get(i);
-		            buttonSelected = true;
-		    }
-		}
-		
-		if (!buttonSelected)
-		{
-		    chooseLocError.setVisible(true);
-		    validate();
-		}
-		else
-		{
-		    modifyTitle.setText("Selected location to modify: " + chosenModifyLocButton.getText());
-		    validate();
-		
-		    CardLayout cl = (CardLayout)(cards.getLayout());
-		    cl.show(cards, "Modify Chosen Location");
-		}
-		}
-		// Show the screen to enter new info to modify location
-		else if (e.getSource() == submitButton4)
-		{
-		// Remove all the radiobuttons from the panel because they get re-added each time
-		for (int n = 0; n < modifyLocButtons.size(); n++)
-		{
-		        modifyLocGroup.remove(modifyLocButtons.get(n));
-		        modifyPanel.remove(modifyLocButtons.get(n));
-		}
-		modifyLocButtons.clear();
-		
-		String modifiedLocName = modifiedNameField.getText();
-		modifiedLocName = modifiedLocName.trim();
-		String modifiedLocLat = modifiedLatField.getText();
-		modifiedLocLat = modifiedLocLat.trim();
-		String modifiedLocLong = modifiedLongField.getText();
-		modifiedLocLong = modifiedLocLong.trim();
-		
-		// Make sure all the fields aren't empty
-		if (modifiedLocName.equals("") || modifiedLocLat.equals("") || modifiedLocLong.equals(""))
-		{
-		    emptyFieldsError2.setVisible(true);
-		    validate();
-		}
-		// Else, find that line in the file, and rewrite as given
-		// Continue back to the admin screen
-		else
-		{
-		try
-		{
-		File inputFile = new File("locations.txt");
-		File tempFile = new File("temp.txt");
-		
-		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-		BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-		
-		String currentLine;
-		
-		while((currentLine = reader.readLine()) != null)
-		{
-		    // Search the location checked to remove
-		    String trimmedLine = currentLine.trim();
-		    boolean canDelete = false;
-		    if (trimmedLine.startsWith(chosenModifyLocButton.getText()))
-		    {
-		            canDelete = true;
-		    }
-		    
-		    // If the location in the line was not the one to be modified, just rewrite it
-		    if(!canDelete)
-		    {
-		            writer.write(currentLine + "\n");
-		    }
-		    // Otherwise, modify it and write it to the file
-		    else
-		    {
-		            writer.write(modifiedLocName + ", " + modifiedLocLat + ", " + modifiedLocLong + "\n");
-		    }
-		}
-		writer.close();
-		reader.close();
-		
-		// Delete the original file
-		if(!inputFile.delete())
-		{
-		        System.out.println("Cannot remove.");
-		}
-		// Rename the temporary file as the original
-		if(!tempFile.renameTo(inputFile))
-		{
-		        System.out.println("Cannot rename");
-		}
-		}
-		catch(Exception e1)
-		{
-		    e1.printStackTrace();
-		}
-		    
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Admin Screen");
-		}
-		}
-		else if (e.getSource() == continueButton)
-		{
-		showLocationScreen();
-		}
 		}
 		
 		private ArrayList<Location> getTrip()
@@ -1498,47 +1627,108 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 		**/
 		private void showLocationScreen()        
 		{
-		createLocationList();
-		
-		
-		for (int h = 0; h < checkedBoxes.size(); h++)
-		{
-		    checkedBoxes.get(h).setSelected(false);
+			createLocationList();
+			
+			
+			for (int h = 0; h < checkedBoxes.size(); h++)
+			{
+			    checkedBoxes.get(h).setSelected(false);
+			}
+			checkedBoxes.clear();         // If the admin used this, make sure it is clear again.
+			
+			for (int g = 0; g < allLocCheckBoxes.size(); g++)
+			{
+			    allLocCheckBoxes.get(g).setSelected(false);
+			}
+			allLocCheckBoxes.clear();
+			
+			locations = createLocationList();
+			
+			// For each location in the file, make it into a checkbox
+			for (int j = 0; j < locations.size(); j++)
+			{
+			    JCheckBox locCheck = new JCheckBox(locations.get(j).getName());
+			    locCheck.addItemListener(this);
+			    locCheck.setSelected(false);
+			    allLocCheckBoxes.add(locCheck);
+			}
+			
+			// Add each checkbox to the panel on the locations screen
+			for (int k = 0; k < allLocCheckBoxes.size(); k++)
+			{
+			    checkPanel.add(allLocCheckBoxes.get(k));
+			}
+			    
+			badUserLabel.setVisible(false);
+			validate();
+			
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, "Locations");
 		}
-		checkedBoxes.clear();         // If the admin used this, make sure it is clear again.
 		
-		for (int g = 0; g < allLocCheckBoxes.size(); g++)
+		private static boolean containsComma(String str)
 		{
-		    allLocCheckBoxes.get(g).setSelected(false);
-		}
-		allLocCheckBoxes.clear();
-		
-		locations = createLocationList();
-		
-		// For each location in the file, make it into a checkbox
-		for (int j = 0; j < locations.size(); j++)
-		{
-		    JCheckBox locCheck = new JCheckBox(locations.get(j).getName());
-		    locCheck.addItemListener(this);
-		    locCheck.setSelected(false);
-		    allLocCheckBoxes.add(locCheck);
+			int size = str.length();
+			
+			for (int i = 0; i < size; i++)
+			{
+				if (str.charAt(i) == ',')
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 		
-		// Add each checkbox to the panel on the locations screen
-		for (int k = 0; k < allLocCheckBoxes.size(); k++)
+		/**
+		 * Checks to see if you have a valid latitude
+		 * @param str
+		 * @return
+		 */
+		private static boolean isValidLat(String str) 
 		{
-		    checkPanel.add(allLocCheckBoxes.get(k));
-		}
+		    int size = str.length();
 		    
-		badUserLabel.setVisible(false);
-		validate();
+		    for (int i = 0; i < size; i++) 
+		    {
+		        if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '-' && str.charAt(i) != '.') 
+		        {
+		            return false;
+		        }
+		    }
+		    
+		    double strToDouble = Double.parseDouble(str);
+		    if (strToDouble > 90 || strToDouble < -90)
+		    {
+		    	return false;
+		    }
+
+		    return true;
+		}
 		
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, "Locations");
+		private static boolean isValidLong(String str) 
+		{
+		    int size = str.length();
+		    
+		    for (int i = 0; i < size; i++) 
+		    {
+		        if (!Character.isDigit(str.charAt(i)) && str.charAt(i) != '-' && str.charAt(i) != '.') 
+		        {
+		            return false;
+		        }
+		    }
+		    
+		    double strToDouble = Double.parseDouble(str);
+		    if (strToDouble > 180 || strToDouble < -180)
+		    {
+		    	return false;
+		    }
+
+		    return true;
 		}
 		
 		public static void main(String[] args)
 		{
-		LoginGui logingui = new LoginGui();
+			LoginGui logingui = new LoginGui();
 		}
 }
