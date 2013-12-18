@@ -1311,6 +1311,9 @@ public class LoginGui extends JFrame implements ActionListener, ItemListener
 				            		added = true;
 				            	}
 				            }
+				            if (added == false){
+				            	locations.add(location);
+				            }
 				            
 				            
 				            writeToLocFile = new BufferedWriter(new FileWriter("locations.txt", false));
